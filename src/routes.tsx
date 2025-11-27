@@ -7,7 +7,7 @@ import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
 
 // // user
-// import UserLayout from "./pages/user/UserLayout";
+import UserLayout from "./pages/user/UserLayout";
 // import UserHome from "./pages/user/UserHome";
 // import CategoryPage from "./pages/user/CategoryPage";
 // import CarDetail from "./pages/user/CarDetail";
@@ -33,16 +33,22 @@ const router = createBrowserRouter([
 			{ path: "register", element: <Register /> },
 
 			// User workspace (role-protected)
-			//   {
-			//     path: "user",
-			//     element: <RequireAuth><RequireRole role="user"><UserLayout /></RequireRole></RequireAuth>,
-			//     children: [
-			//       { index: true, element: <UserHome /> },
-			//       { path: "category/:categoryId", element: <CategoryPage /> },
-			//       { path: "car/:carId", element: <CarDetail /> },
-			//       { path: "rent/:carId", element: <RentFlow /> },
-			//     ],
-			//   },
+			{
+				path: "user",
+				element: (
+					// <RequireAuth>
+					// <RequireRole role="user">
+					<UserLayout />
+					// </RequireRole>
+					// </RequireAuth>
+				),
+				// children: [
+				// 	{ index: true, element: <UserHome /> },
+				// 	{ path: "category/:categoryId", element: <CategoryPage /> },
+				// 	{ path: "car/:carId", element: <CarDetail /> },
+				// 	{ path: "rent/:carId", element: <RentFlow /> },
+				// ],
+			},
 
 			// Admin workspace (role-protected)
 			//   {
