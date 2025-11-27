@@ -3,8 +3,8 @@ import App from "./App";
 
 // public
 import Home from "./pages/public/Home";
-// import Login from "./pages/public/Login";
-// import Register from "./pages/public/Register";
+import Login from "./pages/public/Login";
+import Register from "./pages/public/Register";
 
 // // user
 // import UserLayout from "./pages/user/UserLayout";
@@ -29,8 +29,8 @@ const router = createBrowserRouter([
 		children: [
 			// Public
 			{ index: true, element: <Home /> },
-			// { path: "login", element: <Login /> },
-			// { path: "register", element: <Register /> },
+			{ path: "login", element: <Login /> },
+			{ path: "register", element: <Register /> },
 
 			// User workspace (role-protected)
 			//   {
