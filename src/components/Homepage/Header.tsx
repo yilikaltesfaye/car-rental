@@ -3,7 +3,7 @@ import { Link } from "react-router";
 const Header = () => {
 	return (
 		<div className="h-screen overflow-hidden">
-			<div className="bg-[url(/public/images/bg-hero.jpg)] bg-cover bg-bottom m-5 rounded-2xl h-[75vh] text-white flex flex-col overflow-hidden justify-between">
+			<div className="bg-[url(/images/bg-hero.jpg)] bg-cover bg-bottom m-5 rounded-2xl h-[75vh] text-white flex flex-col overflow-hidden justify-between">
 				<nav className="flex flex-row justify-between px-8 py-2 items-center cursor-pointer">
 					<h1 className="italic font-bold font-serif text-2xl">Carent.</h1>
 					<ul className="flex flex-row gap-24 text-2xl font-medium">
@@ -23,7 +23,7 @@ const Header = () => {
 						</button>
 					</Link>
 				</nav>
-				<div className="flex flex-col items-center justify-end cursor-default translate-y-16 hover:my-5 hover:translate-y-0 duration-300 ease-out transition-all gap-6">
+				<div className="flex flex-col items-center justify-end cursor-default translate-y-16 hover:pb-5 hover:translate-y-0 duration-300 ease-out transition-all gap-6">
 					<h2 className="text-9xl p-0 font-sans font-bold tracking-widest">
 						Car Rental
 					</h2>
@@ -44,25 +44,53 @@ const Header = () => {
 			<div className="w-full inline-flex flex-nowrap px-16">
 				<ul className="flex items-center justify-center md:justify-center [&_li]:mx-8 [&_img]:grayscale ">
 					<li>
-						<img src="/public/images/cars/bmw.png" alt="BMW" />
+						<img
+							src="/images/cars/bmw.png"
+							alt="BMW"
+							className="hover:filter-none transition-all ease-in duration-300"
+						/>
 					</li>
 					<li>
-						<img src="/public/images/cars/Chevrolet.png" alt="Chevrolet" />
+						<img
+							src="/images/cars/Chevrolet.png"
+							alt="Chevrolet"
+							className="hover:filter-none transition-all ease-in duration-300"
+						/>
 					</li>
 					<li>
-						<img src="/public/images/cars/ferrari.png" alt="Ferrari" />
+						<img
+							src="/images/cars/ferrari.png"
+							alt="Ferrari"
+							className="hover:filter-none transition-all ease-in duration-300"
+						/>
 					</li>
 					<li>
-						<img src="/public/images/cars/honda.png" alt="Honda" />
+						<img
+							src="/images/cars/honda.png"
+							alt="Honda"
+							className="hover:filter-none transition-all ease-in duration-300"
+						/>
 					</li>
 					<li>
-						<img src="/public/images/cars/Mercedes.png" alt="Mercedes" />
+						<img
+							src="/images/cars/Mercedes.png"
+							alt="Mercedes"
+							className="hover:filter-none transition-all ease-in duration-300"
+						/>
 					</li>
 					<li>
-						<img src="/public/images/cars/toyota.png" alt="Toyota" />
+						<img
+							src="/images/cars/toyota.png"
+							alt="Toyota"
+							className="hover:filter-none transition-all ease-in duration-300"
+						/>
 					</li>
 					<li>
-						<img src="/public/images/cars/Volkswagen.png" alt="Volkswagen" />
+						<img
+							src="/images/cars/Volkswagen.png"
+							alt="Volkswagen"
+							className="hover:filter-none transition-all ease-in duration-300"
+						/>
 					</li>
 				</ul>
 			</div>
