@@ -5,6 +5,20 @@ import CloseLineIcon from "remixicon-react/CloseLineIcon";
 
 const UserLayout = () => {
 	const [open, setOpen] = useState(false);
+	const navItems = [
+		{
+			name: "Home",
+			link: "/user",
+		},
+		{
+			name: "Profile",
+			link: "/user/profile",
+		},
+		{
+			name: "Orders",
+			link: "/user/orders",
+		},
+	];
 
 	return (
 		<div className="flex flex-col h-screen w-full">
@@ -14,15 +28,13 @@ const UserLayout = () => {
 				</Link>
 
 				<ul className="flex flex-row gap-24 text-2xl font-medium">
-					<li>
-						<Link to="/user">Home</Link>
-					</li>
-					<li>
-						<Link to="/user/collections">Collections</Link>
-					</li>
-					<li>
-						<Link to="/user/orders">Orders</Link>
-					</li>
+					{navItems.map((item) => {
+						return (
+							<li>
+								<Link to={item.link}>{item.name}</Link>
+							</li>
+						);
+					})}
 				</ul>
 
 				<div className="relative">
@@ -35,20 +47,6 @@ const UserLayout = () => {
 
 					{open && (
 						<div className="absolute right-0 mt-2 w-44 bg-white shadow-md border rounded-md py-2 text-lg">
-							<Link
-								to="/user/profile"
-								className="block px-4 py-2 hover:bg-gray-100"
-							>
-								Profile
-							</Link>
-
-							<Link
-								to="/user/settings"
-								className="block px-4 py-2 hover:bg-gray-100"
-							>
-								Settings
-							</Link>
-
 							<Link to="/logout" className="block px-4 py-2 hover:bg-gray-100">
 								Logout
 							</Link>
