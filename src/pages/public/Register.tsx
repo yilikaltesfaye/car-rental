@@ -29,10 +29,10 @@ const Register = () => {
 				<h2 className="text-3xl font-bold mb-6">Create an Account</h2>
 
 				<form className="flex flex-col gap-2 max-w-2xl">
-					{/* <div className="flex flex-col">
+					<div className="flex flex-col">
 						<label className="font-semibold font-mono">Username</label>
 						<input type="text" className="border p-2" />
-					</div> */}
+					</div>
 
 					<div className="flex flex-col">
 						<label htmlFor="fullname" className="font-semibold font-mono">
