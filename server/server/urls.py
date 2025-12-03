@@ -26,7 +26,7 @@ urlpatterns = [
     path('auth/', include('account.urls', namespace='account')),
     path("api/catalog/", include("catalog.urls")),
     path("api/rental/", include("rental.urls")),
-    # path("api/adminpanel/", include("adminpanel.urls")),
+    path("api/adminpanel/", include("adminpanel.urls")),
 ]
 
 

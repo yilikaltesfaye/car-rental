@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     # your app
     "account",
     "catalog",
-    "rental"
+    "rental",
+    "adminpanel"
 ]
 
 
