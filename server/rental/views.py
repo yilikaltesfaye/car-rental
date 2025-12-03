@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from django.utils.dateparse import parse_date
 from django.contrib.auth import get_user_model
 from account.permissions import IsAdminOrSuperuser
@@ -8,6 +9,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import Rental
 from .serializers import UserRentalSerializer
+
 
 User = get_user_model()
 

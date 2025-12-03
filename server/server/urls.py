@@ -25,7 +25,7 @@ urlpatterns = [
     # path("admin/", admin.site.urls),
     path('auth/', include('account.urls', namespace='account')),
     path("api/catalog/", include("catalog.urls")),
-    # path("api/rentals/", include("rentals.urls")),
+    path("api/rental/", include("rental.urls")),
     # path("api/adminpanel/", include("adminpanel.urls")),
 ]
 

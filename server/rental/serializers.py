@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from catalog.models.car import CarModel
 from .models import Rental
 from catalog.serializers.car import CarModelSerializer
 
