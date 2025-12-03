@@ -31,6 +31,7 @@ class UserSignupView(generics.CreateAPIView):
             "full_name": user.full_name,
             "address": user.address,
             "phone": user.phone,
+            "id": user.id,
             "role": "admin" if user.is_superuser else "user"
         }
 
@@ -74,6 +75,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             "full_name": self.user.full_name,
             "address": self.user.address,
             "phone": self.user.phone,
+            "id": self.user.id,
             "role": "admin" if self.user.is_superuser else "user"
         }
         return data
@@ -132,6 +134,7 @@ class CookieTokenRefreshSerializer(TokenRefreshSerializer):
                 "full_name": user.full_name,
                 "address": user.address,
                 "phone": user.phone,
+                'id': user.id,
                 "role": "admin" if user.is_superuser else "user"
             }
         except User.DoesNotExist:
