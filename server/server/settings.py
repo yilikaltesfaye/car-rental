@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     # third-party
     "rest_framework",
     # your app
-    "account"
+    "account",
+    "catalog"
 ]
 
 
