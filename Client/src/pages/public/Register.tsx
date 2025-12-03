@@ -35,13 +35,13 @@ const Register = () => {
 					</div>
 
 					<div className="flex flex-col">
-						<label htmlFor="fullname" className="font-semibold font-mono">
+						<label htmlFor="full_name" className="font-semibold font-mono">
 							Full Name
 						</label>
 						<input
 							type="text"
-							name="fullname"
-							id="fullname"
+							name="full_name"
+							id="full_name"
 							className="border p-2"
 						/>
 					</div>
