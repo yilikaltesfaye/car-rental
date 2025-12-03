@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "rest_framework",
     # your app
     "account",
-    "catalog"
+    "catalog",
+    "rental"
 ]
 
 
