@@ -28,6 +28,7 @@ class CarModelDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminOrSuperuser]
     lookup_field = "id"
 
+# Admin move car from one category to another
 class CarMoveView(generics.GenericAPIView):
     serializer_class = CarModelSerializer
     permission_classes = [IsAdminOrSuperuser]
