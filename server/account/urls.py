@@ -5,19 +5,21 @@ from .views.auth import (
     CookieTokenRefreshView,
     logout_view,
 )
+from .views.user import MeView, UserListView, UserDetailView
+
 
 app_name = "user"
 
 urlpatterns = [
-    # Signup → auto-login
+    # Auth
     path("signup", UserSignupView.as_view(), name="signup"),
-
-    # Login → access + refresh tokens
     path("login", MyTokenObtainPairView.as_view(), name="login"),
-
-    # Refresh access token using refresh token in cookie
     path("refresh-token", CookieTokenRefreshView.as_view(), name="token_refresh"),
-
-    # Logout → blacklist refresh token + delete cookie
     path("logout", logout_view, name="logout"),
+
+    # User
+    path("user/me", MeView.as_view(), name="user_me"),
+    path("user", UserListView.as_view(), name="user_list"),
+    path("user/<uuid:id>", UserDetailView.as_view(), name="user_detail"),
+
 ]

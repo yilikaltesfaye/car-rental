@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import User
 from django.contrib.auth.password_validation import validate_password
 
-
 class UserSignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
 
@@ -19,3 +18,26 @@ class UserSignupSerializer(serializers.ModelSerializer):
             phone=validated_data.get("phone", ""),
         )
         return user
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "full_name",
+            "address",
+            "phone",
+            "is_active",
+            "is_admin",
+            "is_staff",
+            "is_superuser",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "is_staff", "is_superuser", "created_at", "updated_at"]
+
+class AdminUserSerializer(UserSerializer):
+    # Admins can edit is_admin and is_active
+    class Meta(UserSerializer.Meta):
+        read_only_fields = ["id", "is_staff", "is_superuser", "created_at", "updated_at"]
