@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     # third-party
     "rest_framework",
     # your app
-    "rental",
+    "account"
 ]
 
 
@@ -74,6 +75,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "server.wsgi.application"
 
+# Secret Key
+SECRET_KEY = config('SECRET_KEY')
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -81,7 +85,7 @@ WSGI_APPLICATION = "server.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "car_rental_db",  # your database name
+        "NAME": "car_rental",  # your database name
         "USER": "root",  # your MySQL username
         "PASSWORD": "116yilikal",  # your MySQL password
         "HOST": "127.0.0.1",
@@ -131,7 +135,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "rental.User"
+AUTH_USER_MODEL = "account.User"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
