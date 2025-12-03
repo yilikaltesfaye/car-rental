@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from account.permissions import IsAdminOrSuperuser
 from catalog.models.car import CarModel
 from catalog.models.category import Category
-from catalog.serializers.car import CarModelSerializer
+from catalog.serializers.car import CarModelSerializer, CarModelCreateSerializer
 
 
 # User + Admin: view cars
@@ -14,21 +14,28 @@ class CarModelListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
 
-# Admin: create car model
+# Admin: create car model with multiple images
 class CarModelCreateView(generics.CreateAPIView):
     queryset = CarModel.objects.all()
-    serializer_class = CarModelSerializer
+    serializer_class = CarModelCreateSerializer
     permission_classes = [IsAdminOrSuperuser]
 
 
 # Admin + User read / Admin edit
 class CarModelDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CarModel.objects.all()
-    serializer_class = CarModelSerializer
     permission_classes = [IsAdminOrSuperuser]
+
+    def get_serializer_class(self):
+        # Use create/update serializer for admin edits, read serializer for others
+        if self.request.method in ["PUT", "PATCH"]:
+            return CarModelCreateSerializer
+        return CarModelSerializer
+
     lookup_field = "id"
 
-# Admin move car from one category to another
+
+# Admin: move car from one category to another
 class CarMoveView(generics.GenericAPIView):
     serializer_class = CarModelSerializer
     permission_classes = [IsAdminOrSuperuser]

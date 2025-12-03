@@ -1,3 +1,4 @@
+import os
 import uuid
 from django.db import models
 from .category import Category
@@ -24,6 +25,13 @@ class CarModel(models.Model):
         return f"{self.model_name} ({self.category.name})"
 
 
+def car_image_upload_path(instance, filename):
+    ext = filename.split('.')[-1]
+    # Filename: <car_model_id>_<uuid>.ext
+    filename = f"{instance.car_model.id}_{uuid.uuid4().hex}.{ext}"
+    return os.path.join("cars", filename)
+
+
 class CarImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     car_model = models.ForeignKey(
@@ -31,7 +39,7 @@ class CarImage(models.Model):
         on_delete=models.CASCADE,
         related_name="images"
     )
-    image = models.ImageField(upload_to="cars/")
+    image = models.ImageField(upload_to=car_image_upload_path)
 
     def __str__(self):
         return f"Image for {self.car_model.model_name}"
