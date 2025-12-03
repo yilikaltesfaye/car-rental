@@ -32,7 +32,7 @@ class UserSignupView(generics.CreateAPIView):
             "address": user.address,
             "phone": user.phone,
             "id": user.id,
-            "role": "admin" if user.is_superuser else "user"
+            "role": user.role
         }
 
         res = Response(
@@ -65,7 +65,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['full_name'] = user.full_name
         token['address'] = user.address
         token['phone'] = user.phone
-        token['role'] = "admin" if user.is_superuser else "user"
+        token['role'] = user.role
         return token
 
     def validate(self, attrs):
@@ -76,7 +76,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             "address": self.user.address,
             "phone": self.user.phone,
             "id": self.user.id,
-            "role": "admin" if self.user.is_superuser else "user"
+            "role": self.user.role
         }
         return data
 
@@ -135,7 +135,7 @@ class CookieTokenRefreshSerializer(TokenRefreshSerializer):
                 "address": user.address,
                 "phone": user.phone,
                 'id': user.id,
-                "role": "admin" if user.is_superuser else "user"
+                "role": user.role
             }
         except User.DoesNotExist:
             raise exceptions.AuthenticationFailed("User not found")
@@ -155,7 +155,7 @@ class CookieTokenRefreshView(TokenRefreshView):
 # Logout → blacklist refresh token
 # -------------------------------
 @api_view(["POST"])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def logout_view(request):
     try:
         refresh_token = request.COOKIES.get("refresh_token")

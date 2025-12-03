@@ -16,6 +16,7 @@ class UserSignupSerializer(serializers.ModelSerializer):
             password=validated_data["password"],
             address=validated_data.get("address", ""),
             phone=validated_data.get("phone", ""),
+            role="user"
         )
         return user
 
@@ -30,14 +31,14 @@ class UserSerializer(serializers.ModelSerializer):
             "phone",
             "is_active",
             "is_admin",
-            "is_staff",
             "is_superuser",
             "created_at",
             "updated_at",
+            "role"
         ]
-        read_only_fields = ["id", "is_staff", "is_superuser", "created_at", "updated_at"]
+        read_only_fields = ["id","is_admin", "is_superuser", "created_at", "updated_at"]
 
 class AdminUserSerializer(UserSerializer):
     # Admins can edit is_admin and is_active
     class Meta(UserSerializer.Meta):
-        read_only_fields = ["id", "is_staff", "is_superuser", "created_at", "updated_at"]
+        read_only_fields = ["id", "is_superuser", "created_at", "updated_at"]

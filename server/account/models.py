@@ -18,6 +18,8 @@ class UserManager(BaseUserManager):
             raise ValueError("The Phone must be set")
         if not address:
             raise ValueError("The Address must be set")
+            
+        extra_fields.setdefault("role", "user") 
 
         user = self.model(
             username=username,
@@ -31,8 +33,9 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, full_name, phone, address, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("role", "admin")  # Safe default
+
 
         return self.create_user(
             username=username,
@@ -48,13 +51,12 @@ class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
     full_name = models.CharField(max_length=255)
-    address = models.TextField(max_length=255)
+    address = models.CharField(max_length=255)
     phone = models.CharField(max_length=30)
 
-    is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    role = models.TextField(default="user")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
