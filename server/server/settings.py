@@ -144,6 +144,13 @@ REST_FRAMEWORK = {
     ),
 }
 
+# settings.py
+
+MEDIA_URL = '/media/'        # URL prefix for media files
+MEDIA_ROOT = BASE_DIR / 'media'  # Filesystem path where uploaded files are stored
+
+
+
 # INSTALLED_APPS += ['corsheaders']
 # MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware'] + MIDDLEWARE
 

@@ -27,8 +27,6 @@ urlpatterns = [
     path("api/catalog/", include("catalog.urls")),
     # path("api/rentals/", include("rentals.urls")),
     # path("api/adminpanel/", include("adminpanel.urls")),
-    # path("api/accounts/", include("accounts.urls")),
-    # path("accounts/", include("django.contrib.auth.urls")),
 ]
 
 
