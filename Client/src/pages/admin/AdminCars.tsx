@@ -32,7 +32,18 @@ export default function AdminCars() {
 		available: 0,
 		images: [],
 	});
+	const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+	const openImageModal = (url: string) => {
+		setSelectedImage(url);
+		setIsImageModalOpen(true);
+	};
+
+	const closeImageModal = () => {
+		setIsImageModalOpen(false);
+		setSelectedImage(null);
+	};
 	// Edit Modal
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 	const [editFormData, setEditFormData] = useState<
@@ -101,7 +112,7 @@ export default function AdminCars() {
 			<h2 className="text-2xl font-semibold">Cars Management</h2>
 
 			<button
-				className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 w-32"
+				className="self-end w-56 px-8 py-4 bg-blue-700 text-white rounded-lg font-medium shadow hover:bg-blue-800"
 				onClick={() => setIsCreateModalOpen(true)}
 			>
 				Add New Car
@@ -446,6 +457,10 @@ export default function AdminCars() {
 								Price
 							</th>
 							<th className="py-3 px-4 text-left font-medium text-gray-700">
+								License
+							</th>
+
+							<th className="py-3 px-4 text-left font-medium text-gray-700">
 								Available
 							</th>
 							<th className="py-3 px-4 text-left font-medium text-gray-700">
@@ -484,6 +499,18 @@ export default function AdminCars() {
 									</td>
 
 									<td className="py-3 px-4">{car.daily_price} Birr</td>
+									<td className="py-3 px-4">
+										{car.images[0] ? (
+											<button
+												className="text-blue-700 underline cursor-pointer"
+												onClick={() => openImageModal(car.images[0].image!)}
+											>
+												View
+											</button>
+										) : (
+											<span className="text-gray-500">None</span>
+										)}
+									</td>
 									<td className="py-3 px-4">{car.available}</td>
 									<td className="py-3 px-4 flex gap-2">
 										<button
@@ -529,6 +556,56 @@ export default function AdminCars() {
 					</tbody>
 				</table>
 			</div>
+			<Transition appear show={isImageModalOpen} as={Fragment}>
+				<Dialog as="div" className="relative z-20" onClose={closeImageModal}>
+					<Transition.Child
+						as={Fragment}
+						enter="ease-out duration-300"
+						enterFrom="opacity-0"
+						enterTo="opacity-100"
+						leave="ease-in duration-200"
+						leaveFrom="opacity-100"
+						leaveTo="opacity-0"
+					>
+						<div className="fixed inset-0 bg-black bg-opacity-25" />
+					</Transition.Child>
+
+					<div className="fixed inset-0 flex items-center justify-center p-4">
+						<Transition.Child
+							as={Fragment}
+							enter="ease-out duration-300"
+							enterFrom="opacity-0 scale-95"
+							enterTo="opacity-100 scale-100"
+							leave="ease-in duration-200"
+							leaveFrom="opacity-100 scale-100"
+							leaveTo="opacity-0 scale-95"
+						>
+							<Dialog.Panel className="max-w-3xl bg-white p-6 rounded-lg shadow-lg">
+								<Dialog.Title className="text-lg font-medium mb-4">
+									License Image
+								</Dialog.Title>
+
+								{selectedImage && (
+									<img
+										src={selectedImage}
+										alt="License"
+										className="w-full rounded border"
+									/>
+								)}
+
+								<div className="mt-4 text-right">
+									<button
+										className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+										onClick={closeImageModal}
+									>
+										Close
+									</button>
+								</div>
+							</Dialog.Panel>
+						</Transition.Child>
+					</div>
+				</Dialog>
+			</Transition>
 		</div>
 	);
 }

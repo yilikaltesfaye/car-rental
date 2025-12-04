@@ -1,9 +1,14 @@
+import { useUsers } from "../../api";
 import { useAdminRentalSummary } from "../../api/adminpanel/query";
+import { useCars, useCategories } from "../../api/catalog/query";
 import { useAuth } from "../../context/AuthContext";
 
 const AdminDashboard = () => {
 	const { user } = useAuth();
 	const { data: rentalSummary = [], isLoading } = useAdminRentalSummary();
+	const { data: cars = [] } = useCars();
+	const { data: users = [] } = useUsers();
+	const { data: categories = [] } = useCategories();
 
 	//   const totalRentals = rentalSummary.reduce((acc, u) => acc + u.total_rentals, 0);
 	const activeRentals = rentalSummary.reduce(
@@ -16,10 +21,10 @@ const AdminDashboard = () => {
 	);
 
 	const stats = [
-		{ label: "Total Cars", value: 50, color: "bg-blue-500" },
+		{ label: "Total Cars", value: cars.length, color: "bg-blue-500" },
 		{
 			label: "Total Users",
-			value: rentalSummary.length,
+			value: users.length,
 			color: "bg-green-500",
 		},
 		{ label: "Active Rentals", value: activeRentals, color: "bg-purple-500" },
@@ -28,7 +33,7 @@ const AdminDashboard = () => {
 			value: completedRentals,
 			color: "bg-indigo-500",
 		},
-		{ label: "Categories", value: 5, color: "bg-pink-500" },
+		{ label: "Categories", value: categories.length, color: "bg-pink-500" },
 	];
 
 	return (
