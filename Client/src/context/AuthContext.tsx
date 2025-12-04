@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import type { LoginPayload, Role, SignupPayload, User } from "../types";
 import {
-	useUserFull,
-	useLogin,
-	useSignup,
-	useLogout,
-	setAccessToken,
-} from "../api";
-import { authApi } from "../api/account/api";
+	authApi,
+	type LoginPayload,
+	type SignupPayload,
+	type User,
+} from "../api/account/api";
+import { setAccessToken } from "../api";
+
+type Role = "user" | "admin";
 
 type AuthContextType = {
 	user: User | null;
@@ -29,90 +29,68 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
-	const [accessToken, internalSetAccessToken] = useState<string | null>(null);
 	const [isInitializing, setIsInitializing] = useState(true);
 
-	const meQuery = useUserFull(!!accessToken);
-	const loginM = useLogin();
-	const registerM = useSignup();
-	const logoutM = useLogout();
-
+	// Initialize auth on mount
 	useEffect(() => {
-		const initializeAuth = async () => {
+		const init = async () => {
 			try {
 				const res = await authApi.refreshToken();
-				internalSetAccessToken(res.data.access as string);
-				setAccessToken(res.data.access as string);
-				await meQuery.refetch();
-			} catch (error: unknown) {
-				const err = error as { response?: { status?: number } };
-				if (err.response?.status === 401) {
-					setUser(null);
-					internalSetAccessToken(null);
-					setAccessToken(null);
-				} else {
-					console.error("Unexpected error during token refresh", error);
-				}
+				setAccessToken(res.data.access);
+				setUser(res.data.user as User);
+			} catch {
+				setUser(null);
+				setAccessToken(null);
 			} finally {
 				setIsInitializing(false);
 			}
 		};
-		initializeAuth();
-	}, [meQuery]);
+		init();
+	}, []);
 
+	// Optional auto-refresh token every 15 min
 	useEffect(() => {
-		if (meQuery.isSuccess && meQuery.data) {
-			setUser(meQuery.data);
-		} else if (meQuery.isError) {
-			setUser(null);
-		}
-	}, [meQuery.isSuccess, meQuery.isError, meQuery.data]);
-
-	useEffect(() => {
-		let interval: ReturnType<typeof setInterval> | undefined;
-		if (user) {
-			interval = setInterval(async () => {
-				try {
-					const res = await authApi.refreshToken();
-					internalSetAccessToken(res.data.access as string);
-					setAccessToken(res.data.access as string);
-				} catch {
-					setUser(null);
-					internalSetAccessToken(null);
-					setAccessToken(null);
-				}
-			}, 15 * 60 * 1000);
-		}
+		if (!user) return;
+		const interval = setInterval(async () => {
+			try {
+				const res = await authApi.refreshToken();
+				setAccessToken(res.data.access);
+				setUser(res.data.user as User);
+			} catch {
+				setUser(null);
+				setAccessToken(null);
+			}
+		}, 15 * 60 * 1000);
 		return () => clearInterval(interval);
 	}, [user]);
 
 	const login = async (payload: LoginPayload) => {
-		const res = await loginM.mutateAsync(payload);
-		internalSetAccessToken(res.access_token);
-		setAccessToken(res.access_token);
-		setUser(res.user);
+		const res = await authApi.login(payload);
+		setAccessToken(res.data.access_token);
+		setUser(res.data.user as User);
 	};
 
 	const register = async (payload: SignupPayload) => {
-		const res = await registerM.mutateAsync(payload);
-		internalSetAccessToken(res.access_token);
-		setAccessToken(res.access_token);
-		setUser(res.user);
+		const res = await authApi.signup(payload);
+		setAccessToken(res.data.access_token);
+		setUser(res.data.user as User);
 	};
 
 	const logout = async () => {
-		await logoutM.mutateAsync();
+		await authApi.logout();
 		setUser(null);
-		internalSetAccessToken(null);
 		setAccessToken(null);
 	};
+
+	// Delay rendering children until initialization completes
+	if (isInitializing) return <div>Loading...</div>;
 
 	return (
 		<AuthContext.Provider
 			value={{
 				user,
-				role: meQuery.data?.role,
-				isLoading: meQuery.isLoading || isInitializing,
+				role: user?.role as Role,
+				isLoading: isInitializing,
 				login,
 				register,
 				logout,

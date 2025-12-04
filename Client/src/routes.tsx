@@ -1,4 +1,3 @@
-// src/router.tsx
 import { createBrowserRouter } from "react-router";
 import App from "./App.tsx";
 
@@ -16,7 +15,7 @@ import RentPage from "./pages/user/RentPage.tsx";
 import UserProfile from "./pages/user/UserProfile.tsx";
 import UserOrders from "./pages/user/UserOrders.tsx";
 
-// // Admin
+// Admin
 import AdminLayout from "./pages/admin/AdminLayout.tsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
 import AdminCars from "./pages/admin/AdminCars.tsx";
@@ -24,35 +23,51 @@ import AdminRentals from "./pages/admin/AdminRentals.tsx";
 import AdminUsers from "./pages/admin/AdminUsers.tsx";
 import AdminCategories from "./pages/admin/AdminCategories.tsx";
 
+// Auth protection
+import { RequireAuth, RequireRole } from "./auth/RequireRole.tsx";
+
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <App />,
 		children: [
-			// Public
+			// Public routes
 			{ index: true, element: <Home /> },
 			{ path: "login", element: <Login /> },
 			{ path: "register", element: <Register /> },
 			{ path: "logout", element: <LogoutPage /> },
 		],
 	},
-	// User environment
+
+	// User environment (protected)
 	{
 		path: "/user",
-		element: <UserLayout />,
+		element: (
+			<RequireAuth>
+				<RequireRole role="user">
+					<UserLayout />
+				</RequireRole>
+			</RequireAuth>
+		),
 		children: [
-			{ index: true, element: <UserHome /> }, // categories + gallery
-			{ path: "car/:carId", element: <CarDetail /> }, // detail page
-			{ path: "rent/:carId", element: <RentPage /> }, // rent flow
-			{ path: "profile", element: <UserProfile /> }, // profile page
-			{ path: "orders", element: <UserOrders /> }, // rental history
+			{ index: true, element: <UserHome /> },
+			{ path: "car/:carId", element: <CarDetail /> },
+			{ path: "rent/:carId", element: <RentPage /> },
+			{ path: "profile", element: <UserProfile /> },
+			{ path: "orders", element: <UserOrders /> },
 		],
 	},
 
-	// Admin environment
+	// Admin environment (protected)
 	{
 		path: "/admin",
-		element: <AdminLayout />,
+		element: (
+			<RequireAuth>
+				<RequireRole role="admin">
+					<AdminLayout />
+				</RequireRole>
+			</RequireAuth>
+		),
 		children: [
 			{ index: true, element: <AdminDashboard /> },
 			{ path: "cars", element: <AdminCars /> },
@@ -62,7 +77,7 @@ const router = createBrowserRouter([
 		],
 	},
 
-	// 404
+	// 404 fallback
 	{ path: "*", element: <div>404 - Not Found</div> },
 ]);
 

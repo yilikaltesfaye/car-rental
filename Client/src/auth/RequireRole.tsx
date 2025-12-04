@@ -1,21 +1,35 @@
 import { Navigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import type { JSX } from "react";
-import type { Role } from "../types"; // import Role type
 
+// Require logged-in user
+export const RequireAuth: React.FC<{ children: JSX.Element }> = ({
+	children,
+}) => {
+	const { user, isLoading } = useAuth();
+
+	if (isLoading) return <div>Loading...</div>; // show loader instead of null
+
+	if (!user) return <Navigate to="/login" replace />;
+
+	return children;
+};
+
+// Require user with specific role
 interface RequireRoleProps {
-	role: Role; // <- use Role type here
+	role: "user" | "admin"; // keep consistent with Role type
 	children: JSX.Element;
 }
 
-const RequireRole: React.FC<RequireRoleProps> = ({ role, children }) => {
-	const { user } = useAuth();
+export const RequireRole: React.FC<RequireRoleProps> = ({ role, children }) => {
+	const { user, isLoading } = useAuth();
 
-	if (!user || user.role !== role) {
+	if (isLoading) return <div>Loading...</div>; // show loader instead of null
+
+	if (!user || user.role?.toLowerCase() !== role.toLowerCase()) {
+		console.log("Redirecting due to role mismatch", user?.role, role);
 		return <Navigate to="/login" replace />;
 	}
 
 	return children;
 };
-
-export default RequireRole;
