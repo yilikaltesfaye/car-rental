@@ -32,7 +32,9 @@ export default function AdminLayout() {
 			>
 				{/* Top: toggle button */}
 				<div className="flex items-center justify-between p-4 border-b border-gray-200">
-					{!collapsed && <h1 className="text-xl font-bold">Admin Panel</h1>}
+					{!collapsed && (
+						<h1 className="italic font-bold font-serif text-2xl ">Carent.</h1>
+					)}
 					<button
 						onClick={() => setCollapsed(!collapsed)}
 						className="p-1 hover:bg-gray-200 rounded"
