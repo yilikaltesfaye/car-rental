@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		const init = async () => {
 			try {
 				const res = await authApi.refreshToken();
-				setAccessToken(res.data.access);
+				setAccessToken(res.data.access_token);
 				setUser(res.data.user as User);
 			} catch {
 				setUser(null);
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		const interval = setInterval(async () => {
 			try {
 				const res = await authApi.refreshToken();
-				setAccessToken(res.data.access);
+				setAccessToken(res.data.access_token);
 				setUser(res.data.user as User);
 			} catch {
 				setUser(null);
