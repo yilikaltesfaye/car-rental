@@ -12,6 +12,7 @@ type AuthContextType = {
 	login: (payload: LoginPayload) => Promise<void>;
 	register: (payload: SignupPayload) => Promise<void>;
 	logout: () => Promise<void>;
+	setUser: (user: User) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -90,6 +91,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 				login,
 				register,
 				logout,
+				setUser,
 			}}
 		>
 			{children}
