@@ -49,7 +49,7 @@ class AdminRentalSummaryView(generics.GenericAPIView):
             rental_data = [
                 {
                     "rental_id": rental.id,
-                    "car_model": rental.car.model.model_name,
+                    "car_model": rental.car.model_name,
                     "start_date": rental.start_date,
                     "end_date": rental.end_date,
                     "status": rental.status

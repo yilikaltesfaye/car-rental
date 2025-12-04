@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 				setUser(null);
 				setAccessToken(null);
 			}
-		}, 15 * 60 * 1000);
+		}, 5 * 60 * 1000);
 		return () => clearInterval(interval);
 	}, [user]);
 
