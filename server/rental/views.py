@@ -24,7 +24,7 @@ class UserRentalListCreateView(generics.ListCreateAPIView):
         car = serializer.validated_data["car"]
         if car.available_stock <= 0:
             raise serializers.ValidationError("Car not available for rent")
-        car.available_stock -= 1
+        car.available -= 1
         car.save()
         serializer.save(user=self.request.user)
 
@@ -40,7 +40,7 @@ class AdminRentalReturnView(generics.UpdateAPIView):
         if rental.status == "returned":
             return Response({"detail": "Rental already returned"}, status=status.HTTP_400_BAD_REQUEST)
         rental.status = "returned"
-        rental.car.available_stock += 1
+        rental.car.available += 1
         rental.car.save()
         rental.save()
         serializer = self.get_serializer(rental)

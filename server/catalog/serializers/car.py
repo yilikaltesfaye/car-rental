@@ -26,8 +26,8 @@ class CarModelSerializer(serializers.ModelSerializer):
             "category_id",
             "model_name",
             "daily_price",
-            "total_stock",
-            "available_stock",
+            "total_count",
+            "available",
             "images",
         ]
 
@@ -48,8 +48,8 @@ class CarModelCreateSerializer(serializers.ModelSerializer):
             "category_id",
             "model_name",
             "daily_price",
-            "total_stock",
-            "available_stock",
+             "total_count",
+            "available",
             "images",
         ]
 
