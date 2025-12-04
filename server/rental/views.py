@@ -22,7 +22,7 @@ class UserRentalListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         car = serializer.validated_data["car"]
-        if car.available_stock <= 0:
+        if car.available <= 0:
             raise serializers.ValidationError("Car not available for rent")
         car.available -= 1
         car.save()

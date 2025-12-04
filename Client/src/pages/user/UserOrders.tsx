@@ -1,9 +1,17 @@
+import { useMyRentalsQuery } from "../../api/rental/query";
+import type { Rental } from "../../types";
+
 export default function UserOrders() {
+	const { data: rentals, isLoading } = useMyRentalsQuery();
+
+	if (isLoading) return <div className="p-6">Loading your rentals...</div>;
+	if (!rentals || rentals.length === 0)
+		return <div className="p-6">You have no rentals yet.</div>;
+
 	return (
 		<div className="max-w-5xl mx-auto p-6 flex flex-col gap-6">
 			<h2 className="text-2xl font-semibold">My Rentals</h2>
 
-			{/* Orders Table */}
 			<div className="overflow-x-auto">
 				<table className="min-w-full border border-gray-300 rounded-lg overflow-hidden">
 					<thead className="bg-gray-100">
@@ -16,17 +24,26 @@ export default function UserOrders() {
 						</tr>
 					</thead>
 					<tbody>
-						{Array.from({ length: 5 }).map((_, idx) => (
+						{rentals.map((rental: Rental) => (
 							<tr
-								key={idx}
+								key={rental.id}
 								className="border-t border-gray-200 hover:bg-gray-50"
 							>
-								<td className="py-3 px-4">Toyota Corolla</td>
-								<td className="py-3 px-4">City Used Cars</td>
-								<td className="py-3 px-4">2025-01-10</td>
-								<td className="py-3 px-4">2025-01-12</td>
-								<td className="py-3 px-4 font-medium text-green-600">
-									Ongoing
+								<td className="py-3 px-4">{rental.car.model_name}</td>
+								<td className="py-3 px-4">{rental.car.category.name}</td>
+								<td className="py-3 px-4">{rental.start_date}</td>
+								<td className="py-3 px-4">{rental.end_date}</td>
+								<td
+									className={`py-3 px-4 font-medium ${
+										rental.status === "rented"
+											? "text-green-600"
+											: rental.status === "returned"
+											? "text-gray-600"
+											: "text-red-600"
+									}`}
+								>
+									{rental.status.charAt(0).toUpperCase() +
+										rental.status.slice(1)}
 								</td>
 							</tr>
 						))}

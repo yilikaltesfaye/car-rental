@@ -24,7 +24,7 @@ class CarModelCreateView(generics.CreateAPIView):
 # Admin + User read / Admin edit
 class CarModelDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CarModel.objects.all()
-    permission_classes = [IsAdminOrSuperuser]
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         # Use create/update serializer for admin edits, read serializer for others
