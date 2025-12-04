@@ -2,6 +2,11 @@ export * from "./payload/account.payload";
 export * from "./payload/catalog.payload";
 export * from "./payload/adminpanel";
 
+export enum Role {
+	USER = "user",
+	ADMIN = "admin",
+}
+
 export interface TokenResponse {
 	access_token: string;
 	user: User;
@@ -27,5 +32,5 @@ export interface User {
 	is_superuser?: boolean;
 	created_at?: string;
 	updated_at?: string;
-	role: "user" | "admin";
+	role: Role;
 }

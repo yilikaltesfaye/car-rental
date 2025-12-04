@@ -3,16 +3,16 @@ import { userApi } from "./api";
 import type { User } from "../../types";
 
 // Fetch current logged-in user
-export const useMe = () =>
+export const useUserFull = (enabled: boolean = true) =>
 	useQuery<User>({
-		queryKey: ["me"],
+		queryKey: ["useUserFull "],
 		queryFn: async () => {
 			const res = await userApi.getMe();
 			return res.data;
 		},
-		staleTime: 60_000,
-		retry: 1,
-		refetchOnWindowFocus: false,
+		staleTime: 5 * 60 * 1000,
+		retry: false,
+		enabled,
 	});
 
 // Admin: fetch all users

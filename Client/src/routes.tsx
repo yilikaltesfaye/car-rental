@@ -6,6 +6,7 @@ import App from "./App.tsx";
 import Home from "./pages/public/Home.tsx";
 import Login from "./pages/public/Login.tsx";
 import Register from "./pages/public/Register.tsx";
+import LogoutPage from "./pages/public/Logout.tsx";
 
 // User
 import UserLayout from "./pages/user/UserLayout.tsx";
@@ -23,10 +24,6 @@ import AdminRentals from "./pages/admin/AdminRentals.tsx";
 import AdminUsers from "./pages/admin/AdminUsers.tsx";
 import AdminCategories from "./pages/admin/AdminCategories.tsx";
 
-// // Auth
-// import RequireAuth from "./auth/RequireAuth";
-// import RequireRole from "./auth/RequireRole";
-
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -36,49 +33,37 @@ const router = createBrowserRouter([
 			{ index: true, element: <Home /> },
 			{ path: "login", element: <Login /> },
 			{ path: "register", element: <Register /> },
-
-			// User environment
-			{
-				path: "user",
-				element: (
-					//   <RequireAuth>
-					//     <RequireRole role="user">
-					<UserLayout />
-					//     {/* </RequireRole>
-					//   </RequireAuth> */}
-				),
-				children: [
-					{ index: true, element: <UserHome /> }, // categories + gallery
-					{ path: "car/:carId", element: <CarDetail /> }, // detail page
-					{ path: "rent/:carId", element: <RentPage /> }, // rent flow
-					{ path: "profile", element: <UserProfile /> }, // profile page
-					{ path: "orders", element: <UserOrders /> }, // rental history
-				],
-			},
-
-			// Admin environment
-			{
-				path: "admin",
-				element: (
-					//   <RequireAuth>
-					// <RequireRole role="admin">
-					<AdminLayout />
-					// </RequireRole>
-					//   </RequireAuth>
-				),
-				children: [
-					{ index: true, element: <AdminDashboard /> },
-					{ path: "cars", element: <AdminCars /> },
-					{ path: "rentals", element: <AdminRentals /> },
-					{ path: "users", element: <AdminUsers /> },
-					{ path: "categories", element: <AdminCategories /> },
-				],
-			},
-
-			// 404
-			{ path: "*", element: <div>404 - Not Found</div> },
+			{ path: "logout", element: <LogoutPage /> },
 		],
 	},
+	// User environment
+	{
+		path: "/user",
+		element: <UserLayout />,
+		children: [
+			{ index: true, element: <UserHome /> }, // categories + gallery
+			{ path: "car/:carId", element: <CarDetail /> }, // detail page
+			{ path: "rent/:carId", element: <RentPage /> }, // rent flow
+			{ path: "profile", element: <UserProfile /> }, // profile page
+			{ path: "orders", element: <UserOrders /> }, // rental history
+		],
+	},
+
+	// Admin environment
+	{
+		path: "/admin",
+		element: <AdminLayout />,
+		children: [
+			{ index: true, element: <AdminDashboard /> },
+			{ path: "cars", element: <AdminCars /> },
+			{ path: "rentals", element: <AdminRentals /> },
+			{ path: "users", element: <AdminUsers /> },
+			{ path: "categories", element: <AdminCategories /> },
+		],
+	},
+
+	// 404
+	{ path: "*", element: <div>404 - Not Found</div> },
 ]);
 
 export default router;
