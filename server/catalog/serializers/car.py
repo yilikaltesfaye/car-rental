@@ -9,13 +9,20 @@ class CarImageSerializer(serializers.ModelSerializer):
         model = CarImage
         fields = ["id", "image"]
 
+class BasicCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["id", "name", "description"]
 
 # Serializer for listing / retrieving car models
 class CarModelSerializer(serializers.ModelSerializer):
     images = CarImageSerializer(many=True, read_only=True)
-    category = serializers.StringRelatedField(read_only=True)
+    
+    # 🛑 FIX HERE 🛑: Changed CategorySerializer to BasicCategorySerializer
+    category = BasicCategorySerializer(read_only=True) 
+    
     category_id = serializers.PrimaryKeyRelatedField(
-        queryset=Category.objects.all(), source="category", write_only=True
+    queryset=Category.objects.all(), source="category", write_only=True
     )
 
     class Meta:
@@ -48,7 +55,7 @@ class CarModelCreateSerializer(serializers.ModelSerializer):
             "category_id",
             "model_name",
             "daily_price",
-             "total_count",
+            "total_count",
             "available",
             "images",
         ]
