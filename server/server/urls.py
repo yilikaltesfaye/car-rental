@@ -23,10 +23,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/auth", include('account.urls', namespace='account')),
-    path("api/catalog", include("catalog.urls")),
-    path("api/rental", include("rental.urls")),
-    path("api/adminpanel", include("adminpanel.urls")),
+    path("api/auth/", include('account.urls', namespace='account')),
+    path("api/catalog/", include("catalog.urls")),
+    path("api/rental/", include("rental.urls")),
+    path("api/adminpanel/", include("adminpanel.urls")),
 ]
 
 

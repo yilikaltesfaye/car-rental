@@ -6,7 +6,7 @@ app_name = "adminpanel"
 urlpatterns = [
     # GET: Admin rental summary
     # Optional query params: user_id, status, start_date, end_date
-    path("/summary", AdminRentalSummaryView.as_view(), name="rental_summary"),
+    path("summary", AdminRentalSummaryView.as_view(), name="rental_summary"),
 ]
 # Get all rentals summary
 # GET /api/admin_panel/rental-summary/
