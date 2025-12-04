@@ -1,6 +1,7 @@
 export interface Category {
 	id: string;
 	name: string;
+	description: string;
 }
 
 export interface CarImage {
@@ -10,7 +11,7 @@ export interface CarImage {
 
 export interface CarModel {
 	id: string;
-	category: string; // category name
+	category: Category; // category name
 	category_id: string; // for creating/updating
 	model_name: string;
 	daily_price: number;
