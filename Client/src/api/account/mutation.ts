@@ -1,11 +1,11 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-	authApi,
-	userApi,
-	type LoginPayload,
-	type SignupPayload,
-	type UpdateUserPayload,
-} from "./api";
+import { useMutation } from "@tanstack/react-query";
+import { authApi, userApi } from "./api";
+import type {
+	SignupPayload,
+	LoginPayload,
+	UpdateUserPayload,
+} from "../../types";
+import { queryClient } from "../client";
 
 // ---------------------
 // Auth Mutations
@@ -31,7 +31,6 @@ export const useLogin = () => {
 };
 
 export const useLogout = () => {
-	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
 			const res = await authApi.logout();
@@ -57,7 +56,6 @@ export const useRefreshToken = () => {
 // ---------------------
 
 export const useUpdateMe = () => {
-	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async (payload: UpdateUserPayload) => {
 			const res = await userApi.updateMe(payload);
@@ -71,7 +69,6 @@ export const useUpdateMe = () => {
 
 // ADMIN ONLY
 export const useDeleteUserById = () => {
-	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async (id: string) => {
 			const res = await userApi.deleteUserById(id);
@@ -84,7 +81,6 @@ export const useDeleteUserById = () => {
 };
 
 export const useUpdateUserById = () => {
-	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async ({
 			id,

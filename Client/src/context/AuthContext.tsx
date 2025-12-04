@@ -1,11 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-	authApi,
-	type LoginPayload,
-	type SignupPayload,
-	type User,
-} from "../api/account/api";
+import { authApi } from "../api/account/api";
 import { setAccessToken } from "../api";
+import type { User, LoginPayload, SignupPayload } from "../types";
 
 type Role = "user" | "admin";
 

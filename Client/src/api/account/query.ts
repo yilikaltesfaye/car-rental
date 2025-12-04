@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { userApi, type User } from "./api";
+import { userApi } from "./api";
+import type { User } from "../../types";
 
 // Fetch current logged-in user
 export const useUserFull = (enabled: boolean = true) =>

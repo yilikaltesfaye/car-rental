@@ -7,6 +7,7 @@ from rest_framework import generics, permissions, status, exceptions, response
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.exceptions import TokenError
 
 
 # -------------------------------
@@ -50,7 +51,9 @@ class UserSignupView(generics.CreateAPIView):
             value=str(refresh),
             httponly=True,
             max_age=7*24*60*60,  # 7 days
-            samesite='Lax'
+            samesite='none',
+            secure="true"
+
         )
         return res
 
@@ -108,7 +111,8 @@ class MyTokenObtainPairView(TokenObtainPairView):
             value=refresh,
             httponly=True,
             max_age=7*24*60*60,
-            samesite='Lax'
+            samesite='none',
+            secure="true"
         )
         return res
 
@@ -163,17 +167,17 @@ class CookieTokenRefreshView(TokenRefreshView):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def logout_view(request):
+    refresh_token = request.COOKIES.get("refresh_token")
+    if not refresh_token:
+        return response.Response({"message": "No refresh token provided"}, status=status.HTTP_400_BAD_REQUEST)
+    
     try:
-        refresh_token = request.COOKIES.get("refresh_token")
-        if refresh_token:
-            token = RefreshToken(refresh_token)
-            token.blacklist()
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+    except TokenError:
+        # Token invalid or expired, ignore but still clear cookie
+        pass
 
-        res = response.Response(
-            {"message": "Logged out"},
-            status=status.HTTP_200_OK
-        )
-        res.delete_cookie("refresh_token")
-        return res
-    except Exception:
-        raise exceptions.ParseError("Invalid refresh token")
+    res = response.Response({"message": "Logged out"}, status=status.HTTP_200_OK)
+    res.delete_cookie("refresh_token")
+    return res

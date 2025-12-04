@@ -7,10 +7,23 @@ export default function LogoutPage() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		logout().finally(() => {
-			navigate("/", { replace: true });
-		});
-	}, [logout, navigate]);
+		const run = async () => {
+			try {
+				await logout();
+			} catch (err) {
+				console.error("Logout failed", err);
+			} finally {
+				navigate("/", { replace: true });
+			}
+		};
 
-	return null;
+		run();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return (
+		<div className="flex justify-center items-center h-screen">
+			Logging out...
+		</div>
+	);
 }

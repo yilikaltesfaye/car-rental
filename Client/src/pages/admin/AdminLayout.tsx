@@ -7,6 +7,7 @@ export default function AdminLayout() {
 		{ name: "Rentals", path: "/admin/rentals" },
 		{ name: "Users", path: "/admin/users" },
 		{ name: "Categories", path: "/admin/categories" },
+		{ name: "Logout", path: "/logout" },
 	];
 
 	return (
