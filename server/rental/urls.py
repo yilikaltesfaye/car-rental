@@ -5,7 +5,7 @@ app_name = "rental"
 
 urlpatterns = [
     # User rentals
-    path("me", UserRentalListCreateView.as_view(), name="user_rentals"),  
+    path("/me", UserRentalListCreateView.as_view(), name="user_rentals"),  
 
     # Admin rentals
     path("", AdminRentalListView.as_view(), name="all_rentals"),  
