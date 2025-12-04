@@ -25,6 +25,7 @@ import AdminCategories from "./pages/admin/AdminCategories.tsx";
 
 // Auth protection
 import { RequireAuth, RequireRole } from "./auth/RequireRole.tsx";
+import AdminProfile from "./pages/admin/AdminProfile.tsx";
 
 const router = createBrowserRouter([
 	{
@@ -74,6 +75,7 @@ const router = createBrowserRouter([
 			{ path: "rentals", element: <AdminRentals /> },
 			{ path: "users", element: <AdminUsers /> },
 			{ path: "categories", element: <AdminCategories /> },
+			{ path: "profile", element: <AdminProfile /> },
 		],
 	},
 

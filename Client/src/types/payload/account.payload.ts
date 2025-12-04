@@ -40,7 +40,7 @@ export interface TokenResponse {
 }
 
 export interface RefreshResponse {
-	access: string;
+	access_token: string;
 	user: User;
 }
 
