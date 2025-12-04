@@ -146,10 +146,16 @@ class CookieTokenRefreshSerializer(TokenRefreshSerializer):
 class CookieTokenRefreshView(TokenRefreshView):
     serializer_class = CookieTokenRefreshSerializer
 
-    def finalize_response(self, request, response, *args, **kwargs):
-        # Refresh token remains in cookie, not in body
-        return super().finalize_response(request, response, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
 
+        # Map 'access' to 'access_token' for frontend consistency
+        return Response({
+            "access_token": data['access'],  # <--- match frontend
+            "user": data['user']
+        })
 
 # -------------------------------
 # Logout → blacklist refresh token
