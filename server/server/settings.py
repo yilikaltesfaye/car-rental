@@ -26,9 +26,9 @@ SECRET_KEY = "django-insecure-qpvbgib078j4io9ihwd#t7vxlx7f&v)op3n+_xp#b789+f)$&4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,18 +39,21 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     # third-party
+    "corsheaders",
     "rest_framework",
-    # your app
+
+    # your apps
     "account",
     "catalog",
     "rental",
     "adminpanel"
 ]
 
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",  # keep at top
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -58,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 ROOT_URLCONF = "server.urls"
 
@@ -153,11 +157,10 @@ MEDIA_ROOT = BASE_DIR / 'media'  # Filesystem path where uploaded files are stor
 
 
 
-# INSTALLED_APPS += ['corsheaders']
-# MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware'] + MIDDLEWARE
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",  # your React Vite app
-# ]
+CORS_ALLOW_CREDENTIALS = True
 
-# CORS_ALLOW_CREDENTIALS = True
+

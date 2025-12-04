@@ -14,7 +14,7 @@ export const authApi = {
 		apiClient.post<TokenResponse>("/auth/signup", payload),
 	login: (payload: LoginPayload) =>
 		apiClient.post<TokenResponse>("/auth/login", payload),
-	refreshToken: () => apiClient.get<RefreshResponse>("/auth/refresh-token"),
+	refreshToken: () => apiClient.post<RefreshResponse>("/auth/refresh-token"),
 	logout: () => apiClient.post<LogoutResponse>("/auth/logout"),
 };
 
