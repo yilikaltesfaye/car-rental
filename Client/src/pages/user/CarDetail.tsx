@@ -29,7 +29,6 @@ export default function CarDetail() {
 
 	return (
 		<div className="max-w-6xl mx-auto p-6 flex flex-col md:flex-row gap-6">
-			{/* Left: Car Image */}
 			<div className="md:w-1/2 w-full h-80 md:h-auto bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
 				{car.images?.[0] ? (
 					<img
@@ -44,7 +43,6 @@ export default function CarDetail() {
 				)}
 			</div>
 
-			{/* Right: Car Details */}
 			<div className="md:w-1/2 w-full flex flex-col gap-4 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 				<h2 className="text-2xl font-semibold">{car.model_name}</h2>
 				<p className="text-gray-700">

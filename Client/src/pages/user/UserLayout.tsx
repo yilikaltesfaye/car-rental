@@ -17,16 +17,13 @@ const UserLayout = () => {
 
 	return (
 		<div className="flex flex-col h-screen w-full font-inter bg-gray-50">
-			{/* Top Navbar */}
 			<nav className="flex items-center justify-between px-6 md:px-10 py-4 bg-white shadow-md rounded-xl m-3 md:m-5">
-				{/* Logo */}
 				<Link to="/user">
 					<h1 className="italic font-bold font-serif text-2xl md:text-3xl text-gray-950">
 						Carent.
 					</h1>
 				</Link>
 
-				{/* Desktop nav items */}
 				<ul className="hidden md:flex flex-row gap-6 lg:gap-10 text-lg font-medium">
 					{navItems.map((item) => (
 						<li key={item.name}>
@@ -45,9 +42,7 @@ const UserLayout = () => {
 					))}
 				</ul>
 
-				{/* Right action buttons & profile */}
 				<div className="hidden md:flex items-center gap-4">
-					{/* Profile dropdown */}
 					<div className="relative">
 						<button
 							onClick={() => setMenuOpen(!menuOpen)}
@@ -80,7 +75,6 @@ const UserLayout = () => {
 					</div>
 				</div>
 
-				{/* Mobile menu */}
 				<div className="md:hidden">
 					<button
 						onClick={() => setMenuOpen(!menuOpen)}
@@ -124,13 +118,15 @@ const UserLayout = () => {
 				</div>
 			</nav>
 
-			{/* Main content */}
-			<main className="flex-1 overflow-auto p-6">
-				<Outlet />
+			<main className="flex-1 flex flex-col w-full  p-6 bg-gray-50">
+				<div className="flex-1 overflow-y-scroll">
+					<Outlet />
+				</div>
+
+				<footer className="mt-6 pt-6 border-t border-gray-700 text-center text-gray-500 text-sm">
+					&copy; {new Date().getFullYear()} Carent. All rights reserved.
+				</footer>
 			</main>
-			<footer className="bg-white shadow-inner mt-auto py-4 px-6 md:px-10 text-center text-gray-600 border-t border-gray-200">
-				<p>© {new Date().getFullYear()} Carent. All rights reserved.</p>
-			</footer>
 		</div>
 	);
 };

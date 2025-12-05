@@ -25,11 +25,23 @@ export default function UserOrders() {
 			</div>
 		);
 
+	const rentalDays = (startDate: string, endDate: string) => {
+		return startDate && endDate
+			? Math.max(
+					0,
+					Math.ceil(
+						(new Date(endDate).getTime() - new Date(startDate).getTime()) /
+							(1000 * 60 * 60 * 24)
+					)
+			  )
+			: 0;
+	};
+
 	return (
-		<div className="max-w-5xl mx-auto p-6 flex flex-col gap-6">
+		<div className="max-w-5xl mx-auto p-6 flex flex-col gap-6 h-[73vh]">
 			<h2 className="text-2xl font-semibold">My Rentals</h2>
 
-			<div className="flex flex-col gap-4">
+			<div className="flex flex-col gap-4 overflow-y-scroll">
 				{orders.map((rental: Rental) => (
 					<div
 						key={rental.id}
@@ -49,6 +61,13 @@ export default function UserOrders() {
 							</p>
 							<p className="font-medium">
 								End: <span className="font-normal">{rental.end_date}</span>
+							</p>
+							<p className="font-medium">
+								Price:{" "}
+								<span className="font-normal">
+									{rentalDays(rental.start_date, rental.end_date) *
+										(rental.car.daily_price || 0)}
+								</span>
 							</p>
 						</div>
 						<div

@@ -29,8 +29,7 @@ export default function UserHome() {
 		: "";
 
 	return (
-		<div className="max-w-7xl mx-auto p-6 flex flex-col md:flex-row gap-6">
-			{/* Categories Sidebar */}
+		<div className="max-w-360 mx-auto p-6 flex flex-col md:flex-row gap-6">
 			<aside className="w-full md:w-64 shrink-0">
 				<h2 className="text-xl font-semibold mb-4">Categories</h2>
 				{categoriesLoading ? (
@@ -62,9 +61,7 @@ export default function UserHome() {
 				)}
 			</aside>
 
-			{/* Main Content */}
 			<div className="flex-1 flex flex-col gap-6">
-				{/* Search */}
 				<div className="mb-4 w-full">
 					<input
 						type="text"
@@ -74,7 +71,6 @@ export default function UserHome() {
 						onChange={(e) => setSearchTerm(e.target.value)}
 					/>
 				</div>
-				{/* Cars Section */}
 				<section className="flex-1">
 					<h2 className="text-2xl font-semibold mb-2">{categoryName}</h2>
 					{categoryDescription && (
@@ -85,13 +81,12 @@ export default function UserHome() {
 					) : filteredCars.length === 0 ? (
 						<p className="text-gray-500">No cars found.</p>
 					) : (
-						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-24 justify-evenly">
+						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16 justify-evenly max-h-[55vh] overflow-y-scroll">
 							{filteredCars.map((car: CarModel) => (
 								<div
 									key={car.id}
 									className="bg-white border h-3xs w-xs border-gray-300 rounded-lg hover:shadow-lg transition-shadow  flex flex-col overflow-hidden"
 								>
-									{/* Image */}
 									<div className="h-1/2 w-full bg-gray-200 overflow-hidden">
 										{car.images?.[0] && (
 											<img
@@ -102,7 +97,6 @@ export default function UserHome() {
 										)}
 									</div>
 
-									{/* Card content */}
 									<div className="p-4 flex flex-col justify-between flex-1">
 										<div className="flex flex-col gap-1">
 											<h3 className="text-lg font-medium">{car.model_name}</h3>

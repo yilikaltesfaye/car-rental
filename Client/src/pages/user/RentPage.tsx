@@ -53,7 +53,6 @@ export default function RentPage() {
 
 	return (
 		<div className="max-w-5xl mx-auto p-6 flex flex-col md:flex-row gap-8">
-			{/* Car Image Left */}
 			<div className="md:w-1/2 w-full bg-gray-200 rounded-lg overflow-hidden">
 				{car.images?.[0] ? (
 					<img
@@ -68,11 +67,9 @@ export default function RentPage() {
 				)}
 			</div>
 
-			{/* Rental Form Right */}
 			<div className="md:w-1/2 w-full flex flex-col gap-6">
 				<h2 className="text-2xl font-semibold">Rent {car.model_name}</h2>
 
-				{/* Date Selection */}
 				<div className="flex flex-col gap-3">
 					<div className="flex flex-col">
 						<label className="text-gray-700 font-medium">Start Date</label>
@@ -94,7 +91,6 @@ export default function RentPage() {
 					</div>
 				</div>
 
-				{/* License Upload */}
 				<div className="flex flex-col gap-2">
 					<label className="text-gray-700 font-medium">
 						Upload License Photo
@@ -116,7 +112,6 @@ export default function RentPage() {
 					)}
 				</div>
 
-				{/* Rental Summary */}
 				<div className="border border-gray-300 rounded-lg p-4 bg-gray-50 flex flex-col gap-2">
 					<p>
 						Car Model: <span className="font-medium">{car.model_name}</span>
@@ -129,7 +124,6 @@ export default function RentPage() {
 					</p>
 				</div>
 
-				{/* Submit Button */}
 				<button
 					disabled={!startDate || !endDate || !licenseFile || rentalDays === 0}
 					onClick={handleSubmit}

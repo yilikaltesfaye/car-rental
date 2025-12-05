@@ -62,7 +62,6 @@ export default function UserProfile() {
 		<div className="max-w-3xl mx-auto p-6 flex flex-col gap-6">
 			<h2 className="text-2xl font-semibold">My Profile</h2>
 
-			{/* Message Banner */}
 			{message && (
 				<div
 					className={`mb-4 flex justify-between items-center p-3 rounded-md text-white font-medium transition-all ${
@@ -92,7 +91,6 @@ export default function UserProfile() {
 					/>
 				</div>
 
-				{/* Full Name */}
 				<div className="flex flex-col gap-1">
 					<label className="text-gray-600 font-semibold">Full Name</label>
 					<input
@@ -111,7 +109,6 @@ export default function UserProfile() {
 					)}
 				</div>
 
-				{/* Address */}
 				<div className="flex flex-col gap-1">
 					<label className="text-gray-600 font-semibold">Address</label>
 					<input
@@ -130,7 +127,6 @@ export default function UserProfile() {
 					)}
 				</div>
 
-				{/* Phone */}
 				<div className="flex flex-col gap-1">
 					<label className="text-gray-600 font-semibold">Phone Number</label>
 					<input
@@ -147,7 +143,6 @@ export default function UserProfile() {
 					)}
 				</div>
 
-				{/* Submit */}
 				<button
 					type="submit"
 					disabled={isSubmitting}
