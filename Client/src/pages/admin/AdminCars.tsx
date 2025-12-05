@@ -20,7 +20,6 @@ export default function AdminCars() {
 	const deleteMutation = useDeleteCar();
 	const moveMutation = useMoveCar();
 
-	// Create Modal
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 	const [createFormData, setCreateFormData] = useState<CarModelCreatePayload>({
 		category_id: "",
@@ -31,14 +30,12 @@ export default function AdminCars() {
 		images: [],
 	});
 
-	// Edit Modal
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 	const [editFormData, setEditFormData] = useState<
 		Partial<CarModelCreatePayload>
 	>({});
 	const [editingCarId, setEditingCarId] = useState<string | null>(null);
 
-	// Image Modal
 	const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -52,7 +49,6 @@ export default function AdminCars() {
 		setSelectedImage(null);
 	};
 
-	// File handler
 	const handleFileChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
 		isEdit: boolean
@@ -67,7 +63,6 @@ export default function AdminCars() {
 		}
 	};
 
-	// Create Car
 	const handleCreateSubmit = async () => {
 		if (!createFormData.model_name || !createFormData.category_id) return;
 		await createMutation.mutateAsync(createFormData);
@@ -83,7 +78,6 @@ export default function AdminCars() {
 		queryClient.invalidateQueries({ queryKey: ["cars"] });
 	};
 
-	// Edit Car
 	const handleEditSubmit = async () => {
 		if (!editingCarId) return;
 		const payload: Partial<CarModelCreatePayload> = { ...editFormData };
@@ -95,14 +89,12 @@ export default function AdminCars() {
 		queryClient.invalidateQueries({ queryKey: ["cars"] });
 	};
 
-	// Delete Car
 	const handleDelete = async (id: string) => {
 		if (!confirm("Are you sure you want to delete this car?")) return;
 		await deleteMutation.mutateAsync(id);
 		queryClient.invalidateQueries({ queryKey: ["cars"] });
 	};
 
-	// Move Category
 	const handleMoveCategory = async (id: string, category_id: string) => {
 		await moveMutation.mutateAsync({ id, payload: { category_id } });
 		queryClient.invalidateQueries({ queryKey: ["cars"] });
@@ -119,7 +111,6 @@ export default function AdminCars() {
 				Add New Car
 			</button>
 
-			{/* --- CREATE MODAL --- */}
 			<Transition appear show={isCreateModalOpen} as={Fragment}>
 				<Dialog
 					as="div"
@@ -271,7 +262,6 @@ export default function AdminCars() {
 				</Dialog>
 			</Transition>
 
-			{/* --- EDIT MODAL --- */}
 			<Transition appear show={isEditModalOpen} as={Fragment}>
 				<Dialog
 					as="div"
@@ -425,7 +415,6 @@ export default function AdminCars() {
 				</Dialog>
 			</Transition>
 
-			{/* --- CARS TABLE --- */}
 			<div className="overflow-x-auto bg-white border border-gray-200 rounded-xl shadow-md mt-4">
 				<table className="min-w-full table-auto">
 					<thead className="bg-gray-100 rounded-t-xl">
@@ -560,7 +549,6 @@ export default function AdminCars() {
 				</table>
 			</div>
 
-			{/* --- IMAGE MODAL --- */}
 			<Transition appear show={isImageModalOpen} as={Fragment}>
 				<Dialog as="div" className="relative z-20" onClose={closeImageModal}>
 					<Transition.Child

@@ -26,7 +26,6 @@ export default function AdminRentals() {
 		await returnMutation.mutateAsync(id);
 	};
 
-	// Utility: calculate days difference
 	const numberOfDays = (start: string, end: string) => {
 		const startDate = new Date(start);
 		const endDate = new Date(end);
@@ -160,7 +159,6 @@ export default function AdminRentals() {
 				</table>
 			</div>
 
-			{/* License Image Modal */}
 			<Transition appear show={isImageModalOpen} as={Fragment}>
 				<Dialog as="div" className="relative z-20" onClose={closeImageModal}>
 					<Transition.Child

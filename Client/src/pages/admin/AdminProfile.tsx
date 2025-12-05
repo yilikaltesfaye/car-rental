@@ -66,7 +66,6 @@ export default function AdminProfile() {
 			</div>
 
 			<div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-md max-w-xl w-full mx-auto">
-				{/* Message Banner */}
 				{message && (
 					<div
 						className={`mb-4 flex justify-between items-center p-3 rounded-md text-white font-medium transition-all ${
@@ -85,7 +84,6 @@ export default function AdminProfile() {
 				)}
 
 				<form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-					{/* Username */}
 					<div className="flex flex-col gap-1">
 						<label className="text-gray-700 font-medium">Username</label>
 						<input
@@ -96,7 +94,6 @@ export default function AdminProfile() {
 						/>
 					</div>
 
-					{/* Full Name */}
 					<div className="flex flex-col gap-1">
 						<label className="text-gray-700 font-medium">Full Name</label>
 						<input
@@ -115,7 +112,6 @@ export default function AdminProfile() {
 						)}
 					</div>
 
-					{/* Address */}
 					<div className="flex flex-col gap-1">
 						<label className="text-gray-700 font-medium">Address</label>
 						<input
@@ -134,7 +130,6 @@ export default function AdminProfile() {
 						)}
 					</div>
 
-					{/* Phone */}
 					<div className="flex flex-col gap-1">
 						<label className="text-gray-700 font-medium">Phone Number</label>
 						<input
@@ -153,7 +148,6 @@ export default function AdminProfile() {
 						)}
 					</div>
 
-					{/* Submit Button */}
 					<button
 						type="submit"
 						disabled={isSubmitting}

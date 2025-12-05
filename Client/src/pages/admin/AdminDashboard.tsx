@@ -1,34 +1,137 @@
 import { useUsers } from "../../api";
-import { useAdminRentalSummary } from "../../api/adminpanel/query";
 import { useCars, useCategories } from "../../api/catalog/query";
+import { useAdminRentalsQuery } from "../../api/rental/query"; // Using the query from AdminRentals
 import { useAuth } from "../../context/AuthContext";
+import type { CarModel, Rental } from "../../types";
+
+const numberOfDays = (start: string, end: string): number => {
+	const startDate = new Date(start);
+	const endDate = new Date(end);
+
+	const diffTime = endDate.getTime() - startDate.getTime();
+
+	return Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 1);
+};
+
+const calculateTotalRevenue = (rentals: Rental[]): number => {
+	let totalRevenue = 0;
+
+	rentals.forEach((rental: Rental) => {
+		const dailyPrice = rental.car.daily_price;
+
+		const days = numberOfDays(rental.start_date, rental.end_date);
+
+		totalRevenue += days * dailyPrice;
+	});
+
+	return totalRevenue;
+};
+
+const calculateLast30DaysRevenue = (rentals: Rental[]): number => {
+	let last30DaysRevenue = 0;
+	const thirtyDaysAgo = new Date();
+	thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+	const thirtyDaysAgoTime = thirtyDaysAgo.getTime();
+
+	rentals.forEach((rental: Rental) => {
+		const startDate = new Date(rental.start_date);
+
+		if (startDate.getTime() >= thirtyDaysAgoTime) {
+			const dailyPrice = rental.car.daily_price;
+			const days = numberOfDays(rental.start_date, rental.end_date);
+
+			last30DaysRevenue += days * dailyPrice;
+		}
+	});
+
+	return last30DaysRevenue;
+};
 
 const AdminDashboard = () => {
 	const { user } = useAuth();
-	const { data: rentalSummary = [], isLoading } = useAdminRentalSummary();
-	const { data: cars = [] } = useCars();
-	const { data: users = [] } = useUsers();
-	const { data: categories = [] } = useCategories();
+	const { data: rentals = [], isLoading: rentalsLoading } =
+		useAdminRentalsQuery();
+	const { data: cars = [], isLoading: carsLoading } = useCars();
+	const { data: users = [], isLoading: usersLoading } = useUsers();
+	const { data: categories = [], isLoading: categoriesLoading } =
+		useCategories();
 
-	const activeRentals = rentalSummary.reduce(
-		(acc, u) => acc + u.rentals.filter((r) => r.status === "rented").length,
-		0
-	);
-	const completedRentals = rentalSummary.reduce(
-		(acc, u) => acc + u.rentals.filter((r) => r.status === "returned").length,
+	const isLoading =
+		rentalsLoading || carsLoading || usersLoading || categoriesLoading;
+
+	const totalRevenue = calculateTotalRevenue(rentals as Rental[]);
+	const last30DaysRevenue = calculateLast30DaysRevenue(rentals as Rental[]);
+
+	const activeRentals = rentals.filter((r) => r.status === "rented").length;
+	const completedRentals = rentals.filter(
+		(r) => r.status === "returned"
+	).length;
+
+	const rentalCounts: { [carId: string]: number } = {};
+	rentals.forEach((rental: Rental) => {
+		const carId = rental.car.id;
+		rentalCounts[carId] = (rentalCounts[carId] || 0) + 1;
+	});
+
+	let mostRentedCarModel = "N/A";
+	let maxRentals = 0;
+	let mostRentedCarId: string | null = null;
+
+	for (const id in rentalCounts) {
+		if (rentalCounts[id] > maxRentals) {
+			maxRentals = rentalCounts[id];
+			mostRentedCarId = id;
+		}
+	}
+
+	if (mostRentedCarId) {
+		mostRentedCarModel =
+			cars.find((car: CarModel) => car.id === mostRentedCarId)?.model_name ||
+			"Unknown Car";
+	}
+
+	const totalAvailableCars = cars.reduce(
+		(acc, car: CarModel) => acc + car.available,
 		0
 	);
 
 	const stats = [
-		{ label: "Total Cars", value: cars.length, color: "bg-blue-500" },
-		{ label: "Total Users", value: users.length, color: "bg-green-500" },
-		{ label: "Active Rentals", value: activeRentals, color: "bg-purple-500" },
+		{
+			label: "Total Revenue",
+			value: `${totalRevenue.toLocaleString()} Birr`,
+			color: "bg-teal-500",
+			key: "total-revenue",
+		},
+		{
+			label: "Total Cars",
+			value: cars.length,
+			color: "bg-blue-500",
+			key: "total-cars",
+		},
+		{
+			label: "Total Users",
+			value: users.length,
+			color: "bg-green-500",
+			key: "total-users",
+		},
+		{
+			label: "Active Rentals",
+			value: activeRentals,
+			color: "bg-purple-500",
+			key: "active-rentals",
+		},
 		{
 			label: "Completed Rentals",
 			value: completedRentals,
 			color: "bg-indigo-500",
+			key: "completed-rentals",
 		},
-		{ label: "Categories", value: categories.length, color: "bg-pink-500" },
+		{
+			label: "Categories",
+			value: categories.length,
+			color: "bg-pink-500",
+			key: "categories",
+		},
 	];
 
 	return (
@@ -43,11 +146,13 @@ const AdminDashboard = () => {
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
 				{stats.map((stat) => (
 					<div
-						key={stat.label}
-						className="bg-gray-50 hover:bg-gray-950 hover:text-white transition-all p-4 rounded-xl border border-gray-200 shadow-md flex justify-between items-center cursor-pointer"
+						key={stat.key}
+						className="group bg-white hover:bg-gray-950 hover:text-white transition-all p-4 rounded-xl border border-gray-200 shadow-md flex justify-between items-center cursor-pointer"
 					>
 						<div>
-							<p className="text-gray-600">{stat.label}</p>
+							<p className="text-gray-600 group-hover:text-gray-300 transition-all">
+								{stat.label}
+							</p>
 							<p className="text-2xl font-bold">
 								{isLoading ? "..." : stat.value}
 							</p>
@@ -57,18 +162,30 @@ const AdminDashboard = () => {
 				))}
 			</div>
 
-			{/* Revenue / Graph section placeholder */}
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
-				<div className="bg-gray-50 hover:bg-gray-950 hover:text-white transition-all p-4 rounded-xl border border-gray-200 shadow-md col-span-2 cursor-pointer">
+				<div className="bg-white  p-4 rounded-xl border border-gray-200 shadow-md col-span-2 cursor-pointer">
 					<p className="text-gray-600 mb-2">Revenue (Last 30 days)</p>
-					<div className="h-40 flex items-center justify-center text-gray-400">
-						Chart Placeholder
-					</div>
+					<p className="text-3xl font-extrabold text-gray-950">
+						{isLoading ? "..." : `${last30DaysRevenue.toLocaleString()} Birr`}
+					</p>
 				</div>
-				<div className="bg-gray-50 hover:bg-gray-950 hover:text-white transition-all p-4 rounded-xl border border-gray-200 shadow-md cursor-pointer">
-					<p className="text-gray-600 mb-2">Most Active Category</p>
-					<div className="h-40 flex items-center justify-center text-gray-400">
-						Pie Chart Placeholder
+
+				<div className="bg-white p-4 rounded-xl border border-gray-200 shadow-md flex flex-col justify-around">
+					<div className="mb-4">
+						<p className="text-gray-600">Most Rented Car Model</p>
+						<p className="text-xl font-bold text-gray-950">
+							{isLoading ? "..." : mostRentedCarModel}
+						</p>
+						<p className="text-sm text-gray-500">
+							({maxRentals} total rentals)
+						</p>
+					</div>
+					<div>
+						<p className="text-gray-600">Total Available Cars</p>
+						<p className="text-xl font-bold text-gray-950">
+							{isLoading ? "..." : totalAvailableCars} / {cars.length}
+							<p className="text-sm">Available / Car</p>
+						</p>
 					</div>
 				</div>
 			</div>

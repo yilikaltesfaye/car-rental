@@ -65,7 +65,6 @@ export default function AdminCategories() {
 				Add New Category
 			</button>
 
-			{/* Add Category Modal */}
 			<Transition appear show={isModalOpen} as={Fragment}>
 				<Dialog
 					as="div"
@@ -143,7 +142,6 @@ export default function AdminCategories() {
 				</Dialog>
 			</Transition>
 
-			{/* Categories Table */}
 			<div className="overflow-x-auto bg-white border border-gray-200 rounded-xl shadow-md">
 				<table className="min-w-full table-auto">
 					<thead className="bg-gray-100">

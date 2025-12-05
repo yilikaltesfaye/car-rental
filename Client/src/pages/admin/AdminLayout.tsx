@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Outlet, NavLink } from "react-router";
 
-// Remix Icons
 import DashboardLineIcon from "remixicon-react/LayoutGridLineIcon";
 import CarLineIcon from "remixicon-react/CarLineIcon";
 import FileList2LineIcon from "remixicon-react/FileList2LineIcon";
@@ -24,13 +23,11 @@ export default function AdminLayout() {
 
 	return (
 		<div className="flex h-screen bg-gray-100">
-			{/* Sidebar */}
 			<aside
 				className={`bg-white border-r border-gray-300 flex flex-col transition-all duration-300 ${
 					collapsed ? "w-20" : "w-72 shadow-md"
 				}`}
 			>
-				{/* Top: toggle button */}
 				<div
 					className={`flex items-center p-4 border-b border-gray-200 ${
 						collapsed ? "justify-center" : "justify-between "
@@ -72,7 +69,6 @@ export default function AdminLayout() {
 					})}
 				</nav>
 
-				{/* Secondary Navigation */}
 				<div className="mt-auto p-2 flex flex-col gap-1 px-2">
 					<NavLink
 						to="/admin/profile"
@@ -100,9 +96,14 @@ export default function AdminLayout() {
 				</div>
 			</aside>
 
-			{/* Main Content */}
-			<main className="flex-1 overflow-auto p-6 bg-gray-50">
-				<Outlet />
+			<main className="flex-1 flex flex-col w-full  p-6 bg-gray-50">
+				<div className="flex-1 overflow-y-scroll">
+					<Outlet />
+				</div>
+
+				<footer className="mt-6 pt-6 border-t border-gray-700 text-center text-gray-500 text-sm">
+					&copy; {new Date().getFullYear()} Carent. All rights reserved.
+				</footer>
 			</main>
 		</div>
 	);

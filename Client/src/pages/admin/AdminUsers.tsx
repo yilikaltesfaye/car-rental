@@ -17,7 +17,6 @@ interface User {
 	is_active: boolean;
 }
 
-// Validation schema
 const updateUserSchema = z.object({
 	full_name: z.string().min(2, "Full name is required"),
 	address: z.string().min(2, "Address is required"),
@@ -163,7 +162,6 @@ export default function AdminUsers() {
 				</table>
 			</div>
 
-			{/* Update User Modal */}
 			{editingUser && (
 				<Transition appear show={!!editingUser} as={Fragment}>
 					<Dialog
