@@ -26,7 +26,6 @@ const Services = () => {
 	return (
 		<div className="m-10 rounded-2xl bg-gray-950" id="services">
 			<div className="bg-gray-950 text-white m-3 md:m-5 rounded-2xl p-6 md:p-10 flex flex-col gap-8 font-inter">
-				{/* Section Title & Subtitle */}
 				<h2 className="text-2xl md:text-3xl font-bold text-indigo-700">
 					Our Services
 				</h2>
@@ -41,7 +40,6 @@ const Services = () => {
 					</p>
 				</div>
 
-				{/* Service Cards */}
 				<div className="flex flex-row flex-wrap justify-between gap-6">
 					{service.map((s) => (
 						<div
@@ -49,14 +47,12 @@ const Services = () => {
 							id={s.label}
 							className="bg-gray-900 text-white rounded-xl p-6 flex flex-col items-start gap-12 shadow-lg hover:shadow-2xl transition-shadow flex-1 min-w-[250px] max-w-[32%] min-h-[220px]"
 						>
-							{/* Icon on the left, larger size */}
 							<div className="bg-gray-800 text-white rounded-full p-1.5 text-5xl flex items-center justify-center">
 								<div className="bg-gray-700 p-6 rounded-full">
 									<s.icon className="w-10 h-10" />
 								</div>
 							</div>
 
-							{/* Text content */}
 							<div className="flex flex-col gap-2">
 								<p className="font-bold text-lg">{s.label}</p>
 								<p className="text-sm text-gray-300">{s.description}</p>

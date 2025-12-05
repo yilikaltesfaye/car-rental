@@ -32,13 +32,10 @@ const Header = () => {
 	};
 	return (
 		<div className="max-h-screen overflow-hidden">
-			{/* HERO WRAPPER */}
 			<div className="bg-[url(/images/bg-hero.jpg)] bg-cover bg-center md:bg-bottom m-3 md:m-5 rounded-xl md:rounded-2xl h-[60vh] sm:h-[65vh] md:h-[75vh] text-white flex flex-col justify-between">
-				{/* NAVIGATION */}
 				<nav className="flex flex-row justify-between items-center px-6 md:px-10 py-4 font-inter">
 					<h1 className="italic font-bold text-2xl md:text-3xl">Carent.</h1>
 
-					{/* Desktop Navigation */}
 					<ul className="hidden md:flex flex-row gap-10 lg:gap-20 text-base lg:text-lg font-medium">
 						<li>
 							<a
@@ -66,7 +63,6 @@ const Header = () => {
 						</li>
 					</ul>
 
-					{/* Action Buttons */}
 					<div className="hidden md:flex flex-row items-center gap-4">
 						<NavLink to="/register">
 							<button
@@ -98,7 +94,6 @@ const Header = () => {
 						</NavLink>
 					</div>
 
-					{/* Mobile Menu */}
 					<div className="md:hidden">
 						<Menu>
 							<MenuButton
@@ -164,7 +159,6 @@ const Header = () => {
 					</div>
 				</nav>
 
-				{/* HERO TITLE */}
 				<div className="flex flex-col items-center justify-end translate-y-1 sm:translate-y-1 md:translate-y-3 pointer-events-none">
 					<h2
 						className="font-bold font-inter leading-none
@@ -175,7 +169,6 @@ const Header = () => {
 				</div>
 			</div>
 
-			{/* BRAND MARQUEE */}
 			<div className="w-full py-8 sm:py-10">
 				<Slider {...sliderSettings}>
 					{brands.map((brand) => (
@@ -183,7 +176,7 @@ const Header = () => {
 							<img
 								src={`/images/cars/${brand}.png`}
 								alt={brand}
-								className="h-28 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 cursor-pointer transition duration-300 mx-auto"
+								className="h-28 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 cursor-pointer transition duration-700 mx-auto"
 							/>
 						</div>
 					))}
