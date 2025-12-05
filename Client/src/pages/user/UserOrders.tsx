@@ -1,8 +1,16 @@
+import { useMemo } from "react";
 import { useMyRentalsQuery } from "../../api/rental/query";
 import type { Rental } from "../../types";
 
 export default function UserOrders() {
 	const { data: rentals, isLoading } = useMyRentalsQuery();
+	const orders = useMemo(() => {
+		if (!rentals) return [];
+		return [...rentals].sort(
+			(a, b) =>
+				new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+		);
+	}, [rentals]);
 
 	if (isLoading)
 		return (
@@ -10,7 +18,7 @@ export default function UserOrders() {
 				Loading your rentals...
 			</div>
 		);
-	if (!rentals || rentals.length === 0)
+	if (!orders || orders.length === 0)
 		return (
 			<div className="p-6 text-center text-gray-500">
 				You have no rentals yet.
@@ -22,7 +30,7 @@ export default function UserOrders() {
 			<h2 className="text-2xl font-semibold">My Rentals</h2>
 
 			<div className="flex flex-col gap-4">
-				{rentals.map((rental: Rental) => (
+				{orders.map((rental: Rental) => (
 					<div
 						key={rental.id}
 						className="border border-gray-200 rounded-lg p-4 flex flex-col md:flex-row md:items-center justify-between shadow-sm hover:shadow-md transition-shadow"
