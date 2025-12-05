@@ -27,24 +27,30 @@ export default function AdminLayout() {
 			{/* Sidebar */}
 			<aside
 				className={`bg-white border-r border-gray-300 flex flex-col transition-all duration-300 ${
-					collapsed ? "w-20" : "w-72"
+					collapsed ? "w-20" : "w-72 shadow-md"
 				}`}
 			>
 				{/* Top: toggle button */}
-				<div className="flex items-center justify-between p-4 border-b border-gray-200">
+				<div
+					className={`flex items-center p-4 border-b border-gray-200 ${
+						collapsed ? "justify-center" : "justify-between "
+					} `}
+				>
 					{!collapsed && (
-						<h1 className="italic font-bold font-serif text-2xl ">Carent.</h1>
+						<h1 className="italic font-bold font-serif text-2xl text-gray-950">
+							Carent.
+						</h1>
 					)}
 					<button
 						onClick={() => setCollapsed(!collapsed)}
-						className="p-1 hover:bg-gray-200 rounded"
+						className="p-1 hover:bg-gray-200 rounded transition text-center"
 					>
 						<MenuLineIcon size={24} />
 					</button>
 				</div>
 
 				{/* Primary Navigation */}
-				<nav className="flex flex-col grow mt-5 px-4">
+				<nav className="flex flex-col grow mt-5 px-2 gap-1">
 					{menuItems.map((item) => {
 						const Icon = item.icon;
 						return (
@@ -53,9 +59,9 @@ export default function AdminLayout() {
 								to={item.path}
 								end={item.path === "/admin"}
 								className={({ isActive }) =>
-									`flex items-center text-lg gap-3 transition rounded hover:bg-gray-100 ${
-										isActive ? "bg-gray-200 font-semibold" : "text-gray-700"
-									} ${collapsed ? "justify-center py-3" : "px-3 py-2"}`
+									`flex items-center gap-3 rounded-lg px-3 py-2 transition-all font-medium text-gray-700 hover:bg-gray-950 hover:text-white ${
+										isActive ? "bg-gray-950 text-white" : ""
+									} ${collapsed ? "justify-center py-3 px-0" : ""}`
 								}
 								title={collapsed ? item.label : undefined}
 							>
@@ -67,13 +73,13 @@ export default function AdminLayout() {
 				</nav>
 
 				{/* Secondary Navigation */}
-				<div className="mt-auto p-2 flex flex-col gap-1 px-4">
+				<div className="mt-auto p-2 flex flex-col gap-1 px-2">
 					<NavLink
 						to="/admin/profile"
 						className={({ isActive }) =>
-							`flex items-center gap-3 rounded text-lg hover:bg-gray-100 ${
-								isActive ? "bg-gray-200 font-semibold" : "text-gray-700"
-							} ${collapsed ? "justify-center py-3" : "px-3 py-2"}`
+							`flex items-center gap-3 rounded-lg px-3 py-2 transition-all font-medium text-gray-700 hover:bg-gray-950 hover:text-white ${
+								isActive ? "bg-gray-950 text-white" : ""
+							} ${collapsed ? "justify-center py-3 px-0" : ""}`
 						}
 						title={collapsed ? "Profile" : undefined}
 					>
@@ -83,8 +89,8 @@ export default function AdminLayout() {
 
 					<NavLink
 						to="/logout"
-						className={`flex items-center gap-3 text-lg rounded text-red-600 hover:bg-red-50 ${
-							collapsed ? "justify-center py-3" : "px-3 py-2"
+						className={`flex items-center gap-3 rounded-lg px-3 py-2 text-red-600 font-medium hover:bg-red-100 hover:text-red-700 ${
+							collapsed ? "justify-center py-3 px-0" : ""
 						}`}
 						title={collapsed ? "Logout" : undefined}
 					>
@@ -95,7 +101,7 @@ export default function AdminLayout() {
 			</aside>
 
 			{/* Main Content */}
-			<main className="flex-1 overflow-auto p-6">
+			<main className="flex-1 overflow-auto p-6 bg-gray-50">
 				<Outlet />
 			</main>
 		</div>

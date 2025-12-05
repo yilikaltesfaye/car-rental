@@ -17,7 +17,7 @@ interface User {
 	is_active: boolean;
 }
 
-// Validation schema for modal form
+// Validation schema
 const updateUserSchema = z.object({
 	full_name: z.string().min(2, "Full name is required"),
 	address: z.string().min(2, "Address is required"),
@@ -118,14 +118,14 @@ export default function AdminUsers() {
 											{user.is_active ? "Active" : "Inactive"}
 										</span>
 									</td>
-									<td className="py-3 px-4 flex gap-2">
+									<td className="py-3 px-4 flex items-center gap-2">
 										{ownUser?.id !== user.id && (
 											<>
 												<button
-													className={`px-3 py-1 rounded text-white font-medium ${
+													className={`px-3 py-1 rounded text-white font-medium transition ${
 														user.is_active
-															? "bg-gray-400 hover:bg-gray-500"
-															: "bg-blue-600 hover:bg-blue-700"
+															? "bg-gray-950 border border-gray-950 hover:bg-white hover:text-black"
+															: "bg-blue-700 hover:bg-blue-800"
 													}`}
 													onClick={() =>
 														handleToggleActive(user.id, user.is_active)
@@ -138,14 +138,16 @@ export default function AdminUsers() {
 														? "Deactivate"
 														: "Activate"}
 												</button>
+
 												<button
-													className="px-3 py-1 rounded bg-yellow-500 text-white hover:bg-yellow-600"
+													className="px-3 py-1 rounded bg-gray-950 text-white border border-gray-950 hover:bg-white hover:text-black transition"
 													onClick={() => setEditingUser(user)}
 												>
 													Edit
 												</button>
+
 												<button
-													className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700"
+													className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700 transition"
 													onClick={() => handleDelete(user.id)}
 													disabled={processingId === user.id}
 												>
@@ -248,7 +250,7 @@ function UpdateUserForm({
 				type="text"
 				placeholder="Full Name"
 				{...register("full_name")}
-				className={`border p-2 rounded ${
+				className={`border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-700 ${
 					errors.full_name ? "border-red-500" : "border-gray-300"
 				}`}
 			/>
@@ -260,7 +262,7 @@ function UpdateUserForm({
 				type="text"
 				placeholder="Address"
 				{...register("address")}
-				className={`border p-2 rounded ${
+				className={`border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-700 ${
 					errors.address ? "border-red-500" : "border-gray-300"
 				}`}
 			/>
@@ -272,7 +274,7 @@ function UpdateUserForm({
 				type="tel"
 				placeholder="Phone"
 				{...register("phone")}
-				className={`border p-2 rounded ${
+				className={`border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-700 ${
 					errors.phone ? "border-red-500" : "border-gray-300"
 				}`}
 			/>
@@ -280,27 +282,34 @@ function UpdateUserForm({
 				<span className="text-red-500 text-sm">{errors.phone.message}</span>
 			)}
 
-			<select {...register("role")} className="border p-2 rounded">
+			<select
+				{...register("role")}
+				className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-700"
+			>
 				<option value="user">User</option>
 				<option value="admin">Admin</option>
 			</select>
 
 			<label className="flex items-center gap-2">
-				<input type="checkbox" {...register("is_active")} />
+				<input
+					type="checkbox"
+					{...register("is_active")}
+					className="rounded border-gray-300 focus:ring-2 focus:ring-blue-700"
+				/>
 				Active
 			</label>
 
 			<div className="flex justify-end gap-2 mt-3">
 				<button
 					type="button"
-					className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
+					className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 transition"
 					onClick={onClose}
 				>
 					Cancel
 				</button>
 				<button
 					type="submit"
-					className="px-4 py-2 rounded bg-blue-700 text-white hover:bg-blue-800"
+					className="px-4 py-2 rounded bg-blue-700 text-white hover:bg-blue-800 transition"
 					disabled={isSubmitting}
 				>
 					{isSubmitting ? "Updating..." : "Update"}

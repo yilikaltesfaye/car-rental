@@ -61,11 +61,11 @@ export default function AdminProfile() {
 	return (
 		<div className="flex flex-col gap-6">
 			<div>
-				<h2 className="text-2xl font-semibold">My Profile</h2>
+				<h2 className="text-2xl font-semibold text-gray-950">My Profile</h2>
 				<p>Update your personal information below</p>
 			</div>
 
-			<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm max-w-xl w-full mx-auto text-lg">
+			<div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-md max-w-xl w-full mx-auto">
 				{/* Message Banner */}
 				{message && (
 					<div
@@ -77,7 +77,7 @@ export default function AdminProfile() {
 						<button
 							type="button"
 							onClick={() => setMessage(null)}
-							className="ml-4 text-white font-bold hover:text-gray-200 transition"
+							className="ml-4 font-bold hover:text-gray-200 transition"
 						>
 							&times;
 						</button>
@@ -87,10 +87,10 @@ export default function AdminProfile() {
 				<form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
 					{/* Username */}
 					<div className="flex flex-col gap-1">
-						<label className="text-gray-600 font-semibold">Username</label>
+						<label className="text-gray-700 font-medium">Username</label>
 						<input
 							type="text"
-							className="border border-gray-300 rounded-lg p-3 bg-gray-100 focus:ring-2 focus:ring-blue-400 outline-none transition"
+							className="border border-gray-300 rounded-lg p-3 bg-gray-100 focus:ring-2 focus:ring-gray-950 outline-none transition"
 							value={user?.username}
 							readOnly
 						/>
@@ -98,13 +98,13 @@ export default function AdminProfile() {
 
 					{/* Full Name */}
 					<div className="flex flex-col gap-1">
-						<label className="text-gray-600 font-semibold">Full Name</label>
+						<label className="text-gray-700 font-medium">Full Name</label>
 						<input
 							type="text"
 							className={`border p-3 rounded-lg focus:ring-2 outline-none transition ${
 								errors.full_name
 									? "border-red-500 focus:ring-red-400"
-									: "border-gray-300 focus:ring-blue-400"
+									: "border-gray-300 focus:ring-gray-950"
 							}`}
 							{...register("full_name")}
 						/>
@@ -117,18 +117,18 @@ export default function AdminProfile() {
 
 					{/* Address */}
 					<div className="flex flex-col gap-1">
-						<label className="text-gray-600 font-semibold">Address</label>
+						<label className="text-gray-700 font-medium">Address</label>
 						<input
 							type="text"
 							className={`border p-3 rounded-lg focus:ring-2 outline-none transition ${
 								errors.address
 									? "border-red-500 focus:ring-red-400"
-									: "border-gray-300 focus:ring-blue-400"
+									: "border-gray-300 focus:ring-gray-950"
 							}`}
 							{...register("address")}
 						/>
 						{errors.address && (
-							<p className="text-red-500 text-blg mt-1">
+							<p className="text-red-500 text-sm mt-1">
 								{errors.address.message}
 							</p>
 						)}
@@ -136,18 +136,18 @@ export default function AdminProfile() {
 
 					{/* Phone */}
 					<div className="flex flex-col gap-1">
-						<label className="text-gray-600 font-semibold">Phone Number</label>
+						<label className="text-gray-700 font-medium">Phone Number</label>
 						<input
 							type="tel"
 							className={`border p-3 rounded-lg focus:ring-2 outline-none transition ${
 								errors.phone
 									? "border-red-500 focus:ring-red-400"
-									: "border-gray-300 focus:ring-blue-400"
+									: "border-gray-300 focus:ring-gray-950"
 							}`}
 							{...register("phone")}
 						/>
 						{errors.phone && (
-							<p className="text-red-500 text-lg mt-1">
+							<p className="text-red-500 text-sm mt-1">
 								{errors.phone.message}
 							</p>
 						)}
@@ -157,7 +157,7 @@ export default function AdminProfile() {
 					<button
 						type="submit"
 						disabled={isSubmitting}
-						className="mt-4 w-full py-3 bg-linear-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold rounded-lg shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+						className="mt-4 w-full py-3 bg-gray-950 text-white font-medium rounded-lg shadow hover:bg-white hover:text-black border border-gray-950 transition disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						{isSubmitting ? "Updating..." : "Update Profile"}
 					</button>
