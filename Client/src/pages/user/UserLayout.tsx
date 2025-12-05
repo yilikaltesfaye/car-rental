@@ -1,53 +1,122 @@
-import { Outlet, Link } from "react-router";
+import { Outlet, Link, useLocation } from "react-router";
 import { useState } from "react";
 import User3FillIcon from "remixicon-react/User3FillIcon";
+import HomeLineIcon from "remixicon-react/HomeLineIcon";
+import FileListLineIcon from "remixicon-react/FileListLineIcon";
 import CloseLineIcon from "remixicon-react/CloseLineIcon";
+import MenuLineIcon from "remixicon-react/MenuLineIcon";
 
 const UserLayout = () => {
-	const [open, setOpen] = useState(false);
+	const location = useLocation();
+	const [menuOpen, setMenuOpen] = useState(false);
+
 	const navItems = [
-		{
-			name: "Home",
-			link: "/user",
-		},
-		{
-			name: "Profile",
-			link: "/user/profile",
-		},
-		{
-			name: "Orders",
-			link: "/user/orders",
-		},
+		{ name: "Home", link: "/user", icon: HomeLineIcon },
+		{ name: "Orders", link: "/user/orders", icon: FileListLineIcon },
 	];
 
 	return (
-		<div className="flex flex-col h-screen w-full">
-			<nav className="flex flex-row justify-between px-8 py-2 items-center cursor-pointer border-b">
-				<Link to="/user/home">
-					<h1 className="italic font-bold font-serif text-2xl">Carent.</h1>
+		<div className="flex flex-col h-screen w-full font-inter bg-gray-50">
+			{/* Top Navbar */}
+			<nav className="flex items-center justify-between px-6 md:px-10 py-4 bg-white shadow-md rounded-xl m-3 md:m-5">
+				{/* Logo */}
+				<Link to="/user">
+					<h1 className="italic font-bold font-serif text-2xl md:text-3xl text-gray-950">
+						Carent.
+					</h1>
 				</Link>
 
-				<ul className="flex flex-row gap-24 text-2xl font-medium">
-					{navItems.map((item) => {
-						return (
-							<li>
-								<Link to={item.link}>{item.name}</Link>
-							</li>
-						);
-					})}
+				{/* Desktop nav items */}
+				<ul className="hidden md:flex flex-row gap-6 lg:gap-10 text-lg font-medium">
+					{navItems.map((item) => (
+						<li key={item.name}>
+							<Link
+								to={item.link}
+								className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+									location.pathname === item.link
+										? "bg-gray-200 font-semibold"
+										: "hover:bg-gray-100"
+								}`}
+							>
+								<item.icon size={20} />
+								{item.name}
+							</Link>
+						</li>
+					))}
 				</ul>
 
-				<div className="relative">
-					<button
-						onClick={() => setOpen(!open)}
-						className="w-12 h-12 rounded-full flex items-center justify-center text-3xl cursor-pointer"
-					>
-						{open ? <CloseLineIcon size={28} /> : <User3FillIcon size={28} />}
-					</button>
+				{/* Right action buttons & profile */}
+				<div className="hidden md:flex items-center gap-4">
+					{/* Profile dropdown */}
+					<div className="relative">
+						<button
+							onClick={() => setMenuOpen(!menuOpen)}
+							className="flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors cursor-pointer"
+						>
+							<User3FillIcon size={20} />
+							Menu
+						</button>
 
-					{open && (
-						<div className="absolute right-0 mt-2 w-44 bg-white shadow-md border rounded-md py-2 text-lg">
-							<Link to="/logout" className="block px-4 py-2 hover:bg-gray-100">
+						{menuOpen && (
+							<div className="absolute right-0 mt-2 w-44 bg-white shadow-xl border rounded-xl py-2 z-50 flex flex-col">
+								<Link
+									to="/user/profile"
+									className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+									onClick={() => setMenuOpen(false)}
+								>
+									<User3FillIcon size={18} />
+									Profile
+								</Link>
+								<Link
+									to="/logout"
+									className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+									onClick={() => setMenuOpen(false)}
+								>
+									<CloseLineIcon size={18} />
+									Logout
+								</Link>
+							</div>
+						)}
+					</div>
+				</div>
+
+				{/* Mobile menu */}
+				<div className="md:hidden">
+					<button
+						onClick={() => setMenuOpen(!menuOpen)}
+						className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors flex items-center gap-2"
+					>
+						<MenuLineIcon size={20} />
+						Menu
+					</button>
+					{menuOpen && (
+						<div className="absolute right-3 mt-2 w-44 bg-white shadow-xl border rounded-xl py-2 z-50 flex flex-col">
+							{navItems.map((item) => (
+								<Link
+									key={item.name}
+									to={item.link}
+									className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+									onClick={() => setMenuOpen(false)}
+								>
+									<item.icon size={18} />
+									{item.name}
+								</Link>
+							))}
+							<div className="border-t border-gray-200 my-1" />
+							<Link
+								to="/user/profile"
+								className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+								onClick={() => setMenuOpen(false)}
+							>
+								<User3FillIcon size={18} />
+								Profile
+							</Link>
+							<Link
+								to="/logout"
+								className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+								onClick={() => setMenuOpen(false)}
+							>
+								<CloseLineIcon size={18} />
 								Logout
 							</Link>
 						</div>
@@ -55,9 +124,13 @@ const UserLayout = () => {
 				</div>
 			</nav>
 
-			<div className="flex-1 overflow-auto">
+			{/* Main content */}
+			<main className="flex-1 overflow-auto p-6">
 				<Outlet />
-			</div>
+			</main>
+			<footer className="bg-white shadow-inner mt-auto py-4 px-6 md:px-10 text-center text-gray-600 border-t border-gray-200">
+				<p>© {new Date().getFullYear()} Carent. All rights reserved.</p>
+			</footer>
 		</div>
 	);
 };

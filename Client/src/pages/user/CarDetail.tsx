@@ -3,10 +3,7 @@ import { Link, useParams } from "react-router";
 import { useCarById, useCategories } from "../../api/catalog/query";
 
 export default function CarDetail() {
-	const params = useParams();
-	const carId = params.carId; // Extract id from route
-	console.log(carId);
-	// Fetch car by ID only if carId exists
+	const { carId } = useParams();
 	const {
 		data: car,
 		isLoading: carLoading,
@@ -31,14 +28,14 @@ export default function CarDetail() {
 		"Unknown Category";
 
 	return (
-		<div className="max-w-4xl mx-auto p-6 flex flex-col gap-6">
-			{/* Car Image */}
-			<div className="w-full h-80 bg-gray-200 rounded-lg overflow-hidden">
+		<div className="max-w-6xl mx-auto p-6 flex flex-col md:flex-row gap-6">
+			{/* Left: Car Image */}
+			<div className="md:w-1/2 w-full h-80 md:h-auto bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
 				{car.images?.[0] ? (
 					<img
 						src={car.images[0].image}
 						alt={car.model_name}
-						className="w-full h-full object-cover"
+						className="w-full h-full object-contain"
 					/>
 				) : (
 					<div className="w-full h-full flex items-center justify-center text-gray-500">
@@ -47,8 +44,8 @@ export default function CarDetail() {
 				)}
 			</div>
 
-			{/* Car Details */}
-			<div className="flex flex-col gap-3">
+			{/* Right: Car Details */}
+			<div className="md:w-1/2 w-full flex flex-col gap-4 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 				<h2 className="text-2xl font-semibold">{car.model_name}</h2>
 				<p className="text-gray-700">
 					Category: <span className="font-medium">{categoryName}</span>
@@ -63,21 +60,20 @@ export default function CarDetail() {
 				<p className="text-gray-600">
 					{car.category.description || "No description provided."}
 				</p>
-			</div>
 
-			{/* Rent Button */}
-			<Link to={`/user/rent/${car.id}`}>
-				<button
-					className={`w-48 px-6 py-3 rounded-lg font-medium ${
-						car.available > 0
-							? "bg-blue-700 text-white hover:bg-blue-800"
-							: "bg-gray-400 text-gray-700 cursor-not-allowed"
-					}`}
-					disabled={car.available <= 0}
-				>
-					{car.available > 0 ? "Rent This Car" : "Not Available"}
-				</button>
-			</Link>
+				<Link to={`/user/rent/${car.id}`} className="mt-auto">
+					<button
+						className={`w-48 py-3 rounded-lg font-bold transition-colors text-center ${
+							car.available > 0
+								? "bg-gray-950 text-white hover:bg-white hover:text-black border border-gray-950"
+								: "bg-gray-400 text-gray-700 cursor-not-allowed"
+						}`}
+						disabled={car.available <= 0}
+					>
+						{car.available > 0 ? "Rent This Car" : "Not Available"}
+					</button>
+				</Link>
+			</div>
 		</div>
 	);
 }
