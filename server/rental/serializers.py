@@ -13,7 +13,7 @@ class UserRentalSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rental
-        fields = ["id", "car", "car_id", "start_date", "end_date", "license_image", "status"]
+        fields = ["id", "car", "car_id", "start_date", "end_date", "license_image", "status", "created_at"]
 
     def validate(self, data):
         start_date = data.get("start_date")

@@ -5,7 +5,7 @@ import type { CarModel } from "./catalog.payload";
 // RENTAL
 export interface Rental {
 	id: string;
-	user: User; // Admin serializer returns string username
+	user: User["username"]; // Admin serializer returns string username
 	car: CarModel;
 	start_date: string;
 	end_date: string;
