@@ -21,7 +21,6 @@ const Footer = () => {
 	return (
 		<footer className="bg-gray-950 text-gray-200 mt-10">
 			<div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between gap-8">
-				{/* Branding */}
 				<div className="flex flex-col gap-3">
 					<h1 className="text-white font-bold text-2xl font-inter italic">
 						Carent.
@@ -32,7 +31,6 @@ const Footer = () => {
 					</p>
 				</div>
 
-				{/* Quick Links */}
 				<div className="flex flex-col gap-3">
 					<h2 className="font-semibold text-white text-lg">Quick Links</h2>
 					<ul className="flex flex-col gap-2">
@@ -65,7 +63,6 @@ const Footer = () => {
 					</ul>
 				</div>
 
-				{/* Contact */}
 				<div className="flex flex-col gap-3">
 					<h2 className="font-semibold text-white text-lg">Contact</h2>
 					<p className="text-gray-400 text-sm">Maraki, Gondar, Ethiopia</p>
@@ -74,7 +71,6 @@ const Footer = () => {
 				</div>
 			</div>
 
-			{/* Bottom */}
 			<div className="border-t border-gray-800 mt-6 pt-6 text-center text-gray-500 text-sm">
 				&copy; {new Date().getFullYear()} Carent. All rights reserved.
 			</div>

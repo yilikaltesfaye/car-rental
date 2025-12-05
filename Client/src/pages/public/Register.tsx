@@ -27,7 +27,6 @@ const Register = () => {
 
 	return (
 		<div className="flex h-screen w-full text-white font-inter">
-			{/* Left Hero Image */}
 			<div className="relative w-1/2 h-full hidden md:block bg-gray-800">
 				<img
 					src="/images/logup.jpg"
@@ -44,7 +43,6 @@ const Register = () => {
 				</div>
 			</div>
 
-			{/* Right Form */}
 			<div className="w-full md:w-1/2 h-full flex flex-col justify-center px-10 md:px-20">
 				<Link to="/">
 					<h1 className="italic font-bold text-3xl mb-10 text-black">
