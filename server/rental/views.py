@@ -56,20 +56,24 @@ class AdminRentalListView(generics.ListAPIView):
         queryset = Rental.objects.all()
         params = self.request.query_params
 
+        # Filter by user ID
         user_id = params.get("user_id")
         if user_id:
             queryset = queryset.filter(user_id=user_id)
 
+        # Filter by status (rented/returned)
         status = params.get("status")
         if status in ["rented", "returned"]:
             queryset = queryset.filter(status=status)
 
+        # Filter by start_date >=
         start_date = params.get("start_date")
         if start_date:
             parsed_start = parse_date(start_date)
             if parsed_start:
                 queryset = queryset.filter(start_date__gte=parsed_start)
 
+        # Filter by end_date <=
         end_date = params.get("end_date")
         if end_date:
             parsed_end = parse_date(end_date)

@@ -3,6 +3,7 @@ from catalog.models.car import CarModel, CarImage
 from catalog.models.category import Category
 
 
+# Serializer for individual images
 class CarImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarImage
@@ -13,6 +14,7 @@ class BasicCategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ["id", "name", "description"]
 
+# Serializer for listing / retrieving car models
 class CarModelSerializer(serializers.ModelSerializer):
     images = CarImageSerializer(many=True, read_only=True)
     
@@ -37,6 +39,7 @@ class CarModelSerializer(serializers.ModelSerializer):
         ]
 
 
+# Serializer for creating/updating car models with images
 class CarModelCreateSerializer(serializers.ModelSerializer):
     images = serializers.ListField(
         child=serializers.ImageField(), write_only=True, required=False
@@ -70,6 +73,7 @@ class CarModelCreateSerializer(serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
 
+        # Optionally add new images
         for image in images_data:
             CarImage.objects.create(car_model=instance, image=image)
         return instance
