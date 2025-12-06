@@ -4,7 +4,6 @@ from account.permissions import IsAdminOrSuperuser
 from catalog.models.category import Category
 from catalog.serializers.category import CategorySerializer
 
-# List all categories (all users) and create new category (admin only)
 class CategoryListCreateView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer

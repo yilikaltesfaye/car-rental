@@ -9,6 +9,4 @@ class Category(models.Model):
     description = models.CharField(max_length=255) 
 
     def __str__(self):
-        # 3. If you still need a clean string output for debugging/admin:
-        # It's generally best practice to return only the most identifying field (e.g., name).
         return self.name

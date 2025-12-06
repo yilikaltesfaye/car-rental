@@ -7,7 +7,6 @@ from catalog.models.car import CarModel
 
 def license_image_upload_path(instance, filename):
     ext = filename.split('.')[-1]
-    # Filename: <rental_id>_<uuid>.ext
     filename = f"{instance.id}_{uuid.uuid4().hex}.{ext}"
     return os.path.join("licenses", filename)
 

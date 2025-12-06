@@ -4,7 +4,6 @@ from account.models import User
 from account.serializers import UserSerializer, AdminUserSerializer
 from account.permissions import IsAdminOrSuperuser
 
-# Authenticated user views
 class MeView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
@@ -12,7 +11,6 @@ class MeView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
-# Admin / Superuser views
 class UserListView(generics.ListAPIView):
     serializer_class = AdminUserSerializer
     queryset = User.objects.all()

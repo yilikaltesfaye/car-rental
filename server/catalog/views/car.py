@@ -7,21 +7,18 @@ from catalog.models.category import Category
 from catalog.serializers.car import CarModelSerializer, CarModelCreateSerializer
 
 
-# User + Admin: view cars
 class CarModelListView(generics.ListAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarModelSerializer
     permission_classes = [IsAuthenticated]
 
 
-# Admin: create car model with multiple images
 class CarModelCreateView(generics.CreateAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarModelCreateSerializer
     permission_classes = [IsAdminOrSuperuser]
 
 
-# Admin + User read / Admin edit
 class CarModelDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CarModel.objects.all()
     permission_classes = [IsAuthenticated]
@@ -35,7 +32,6 @@ class CarModelDetailView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = "id"
 
 
-# Admin: move car from one category to another
 class CarMoveView(generics.GenericAPIView):
     serializer_class = CarModelSerializer
     permission_classes = [IsAdminOrSuperuser]

@@ -15,11 +15,9 @@ class AdminRentalSummaryView(generics.GenericAPIView):
     permission_classes = [IsAdminOrSuperuser]
 
     def get(self, request, *args, **kwargs):
-        # Base queryset for rentals
         rentals = Rental.objects.all()
         params = request.query_params
 
-        # Optional filters
         user_id = params.get("user_id")
         if user_id:
             rentals = rentals.filter(user_id=user_id)
@@ -40,7 +38,6 @@ class AdminRentalSummaryView(generics.GenericAPIView):
             if parsed_end:
                 rentals = rentals.filter(end_date__lte=parsed_end)
 
-        # Group rentals by user
         users = User.objects.filter(rentals__in=rentals).distinct()
         summary_list = []
 

@@ -10,9 +10,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.exceptions import TokenError
 
 
-# -------------------------------
-# Signup → auto-login
-# -------------------------------
 class UserSignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSignupSerializer
@@ -23,7 +20,6 @@ class UserSignupView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
 
-        # Issue tokens
         refresh = RefreshToken.for_user(user)
         access = str(refresh.access_token)
 
@@ -45,7 +41,6 @@ class UserSignupView(generics.CreateAPIView):
             status=status.HTTP_201_CREATED
         )
 
-        # Set refresh token in httpOnly cookie only
         res.set_cookie(
             key="refresh_token",
             value=str(refresh),
@@ -58,9 +53,6 @@ class UserSignupView(generics.CreateAPIView):
         return res
 
 
-# -------------------------------
-# Login → access token + cookie refresh
-# -------------------------------
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -105,7 +97,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
             status=status.HTTP_200_OK
         )
 
-        # Set refresh token in httpOnly cookie only
         res.set_cookie(
             key="refresh_token",
             value=refresh,
@@ -117,9 +108,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
         return res
 
 
-# -------------------------------
-# Refresh access token only
-# -------------------------------
+
 class CookieTokenRefreshSerializer(TokenRefreshSerializer):
     refresh = None
 
@@ -129,7 +118,6 @@ class CookieTokenRefreshSerializer(TokenRefreshSerializer):
             raise exceptions.AuthenticationFailed("No refresh token in cookies")
         data = super().validate(attrs)
 
-        # Add user info
         try:
             user_id = RefreshToken(attrs['refresh']).payload['user_id']
             user = User.objects.get(id=user_id)
@@ -155,15 +143,12 @@ class CookieTokenRefreshView(TokenRefreshView):
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
 
-        # Map 'access' to 'access_token' for frontend consistency
         return Response({
             "access_token": data['access'],  # <--- match frontend
             "user": data['user']
         })
 
-# -------------------------------
-# Logout → blacklist refresh token
-# -------------------------------
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def logout_view(request):
@@ -175,7 +160,6 @@ def logout_view(request):
         token = RefreshToken(refresh_token)
         token.blacklist()
     except TokenError:
-        # Token invalid or expired, ignore but still clear cookie
         pass
 
     res = response.Response({"message": "Logged out"}, status=status.HTTP_200_OK)
