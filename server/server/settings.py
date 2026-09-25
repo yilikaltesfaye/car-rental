@@ -7,10 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1"
-).split(",")
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(",")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -58,11 +55,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "server.wsgi.application"
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=config("DATABASE_URL")
-    )
-}
+DATABASES = {"default": dj_database_url.config(default=config("DATABASE_URL"))}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -99,9 +92,6 @@ REST_FRAMEWORK = {
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-CORS_ALLOWED_ORIGINS = config(
-    "CORS_ALLOWED_ORIGINS",
-    default="http://localhost:5173"
-).split(",")
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", default="http://localhost:5173").split(",")
 
 CORS_ALLOW_CREDENTIALS = True
