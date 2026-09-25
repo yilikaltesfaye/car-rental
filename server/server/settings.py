@@ -88,12 +88,20 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Compression backend configurations for WhiteNoise
+# Supabase Cloud Storage Configurations
+SUPABASE_URL = config("SUPABASE_URL")
+SUPABASE_KEY = config("SUPABASE_KEY")  # Use your service_role secret key
+SUPABASE_STORAGE_BUCKET = config("SUPABASE_STORAGE_BUCKET", default="car-rental-media")
+
 STORAGES = {
+    "default": {
+        "BACKEND": "django_storage_supabase.storage.SupabaseStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "account.User"
@@ -104,7 +112,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-MEDIA_URL = "/media/"
+MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_STORAGE_BUCKET}/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", default="http://localhost:5173").split(",")
