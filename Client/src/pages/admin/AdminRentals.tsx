@@ -35,10 +35,6 @@ export default function AdminRentals() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			<h2 className="text-2xl font-semibold text-gray-950">
-				Rentals Management
-			</h2>
-
 			<div className="overflow-x-auto bg-white border border-gray-200 rounded-xl shadow-md mt-4">
 				<table className="min-w-full table-auto">
 					<thead className="bg-gray-100 rounded-t-xl">

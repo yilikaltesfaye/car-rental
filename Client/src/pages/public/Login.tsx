@@ -123,6 +123,14 @@ const Login = () => {
 						Register Here
 					</Link>
 				</p>
+				<p className="text-black">
+					for admin username: <mark>admin</mark>, password:{" "}
+					<mark>admin123</mark>
+				</p>
+				<p className="text-black">
+					for user username: <mark>user</mark>, password:{" "}
+					<mark>Xk9#mQ2vLp7!</mark>
+				</p>
 			</div>
 		</div>
 	);

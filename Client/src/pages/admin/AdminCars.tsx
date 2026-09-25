@@ -46,12 +46,12 @@ export default function AdminCars() {
 
 	const closeImageModal = () => {
 		setIsImageModalOpen(false);
-		setSelectedImage(null);
+		// setSelectedImage(null);
 	};
 
 	const handleFileChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
-		isEdit: boolean
+		isEdit: boolean,
 	) => {
 		const files = e.target.files;
 		if (!files) return;
@@ -102,8 +102,6 @@ export default function AdminCars() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			<h2 className="text-2xl font-semibold text-gray-950">Cars Management</h2>
-
 			<button
 				className="self-end w-56 px-8 py-3 bg-gray-950 text-white rounded-lg border border-gray-950 hover:bg-white hover:text-black transition"
 				onClick={() => setIsCreateModalOpen(true)}
@@ -126,7 +124,7 @@ export default function AdminCars() {
 						leaveFrom="opacity-100"
 						leaveTo="opacity-0"
 					>
-						<div className="fixed inset-0 bg-black bg-opacity-25" />
+						<div className="fixed inset-0 bg-black/50" />
 					</Transition.Child>
 
 					<div className="fixed inset-0 flex items-center justify-center p-4">
@@ -429,7 +427,7 @@ export default function AdminCars() {
 								Price
 							</th>
 							<th className="py-3 px-4 text-left font-medium text-gray-700">
-								License
+								Image
 							</th>
 							<th className="py-3 px-4 text-left font-medium text-gray-700">
 								Available
@@ -549,7 +547,12 @@ export default function AdminCars() {
 				</table>
 			</div>
 
-			<Transition appear show={isImageModalOpen} as={Fragment}>
+			<Transition
+				appear
+				show={isImageModalOpen}
+				as={Fragment}
+				afterLeave={() => setSelectedImage(null)}
+			>
 				<Dialog as="div" className="relative z-20" onClose={closeImageModal}>
 					<Transition.Child
 						as={Fragment}
@@ -560,7 +563,7 @@ export default function AdminCars() {
 						leaveFrom="opacity-100"
 						leaveTo="opacity-0"
 					>
-						<div className="fixed inset-0 bg-black bg-opacity-25" />
+						<div className="fixed inset-0 bg-black/50" />
 					</Transition.Child>
 
 					<div className="fixed inset-0 flex items-center justify-center p-4">
@@ -575,12 +578,12 @@ export default function AdminCars() {
 						>
 							<Dialog.Panel className="max-w-3xl bg-white p-6 rounded-2xl shadow-lg">
 								<Dialog.Title className="text-lg font-medium mb-4">
-									License Image
+									Car Image
 								</Dialog.Title>
 								{selectedImage && (
 									<img
 										src={selectedImage}
-										alt="License"
+										alt="Car Image"
 										className="w-full rounded border"
 									/>
 								)}

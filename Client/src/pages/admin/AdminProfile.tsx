@@ -61,7 +61,6 @@ export default function AdminProfile() {
 	return (
 		<div className="flex flex-col gap-6">
 			<div>
-				<h2 className="text-2xl font-semibold text-gray-950">My Profile</h2>
 				<p>Update your personal information below</p>
 			</div>
 

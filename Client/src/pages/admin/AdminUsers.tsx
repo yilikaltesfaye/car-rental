@@ -51,8 +51,6 @@ export default function AdminUsers() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			<h2 className="text-2xl font-semibold">Users Management</h2>
-
 			<div className="overflow-x-auto bg-white border border-gray-200 rounded-lg shadow-sm">
 				<table className="min-w-full table-auto">
 					<thead className="bg-gray-100">
@@ -134,8 +132,8 @@ export default function AdminUsers() {
 													{processingId === user.id
 														? "Processing..."
 														: user.is_active
-														? "Deactivate"
-														: "Activate"}
+															? "Deactivate"
+															: "Activate"}
 												</button>
 
 												<button

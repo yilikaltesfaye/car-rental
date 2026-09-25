@@ -64,7 +64,7 @@ const AdminDashboard = () => {
 
 	const activeRentals = rentals.filter((r) => r.status === "rented").length;
 	const completedRentals = rentals.filter(
-		(r) => r.status === "returned"
+		(r) => r.status === "returned",
 	).length;
 
 	const rentalCounts: { [carId: string]: number } = {};
@@ -92,7 +92,7 @@ const AdminDashboard = () => {
 
 	const totalAvailableCars = cars.reduce(
 		(acc, car: CarModel) => acc + car.available,
-		0
+		0,
 	);
 
 	const stats = [
@@ -136,13 +136,6 @@ const AdminDashboard = () => {
 
 	return (
 		<div className="flex flex-col gap-6">
-			<div>
-				<h2 className="text-2xl font-semibold text-gray-950">
-					Welcome back, {user?.username.toUpperCase()}
-				</h2>
-				<p className="text-gray-700">Full Name: {user?.full_name}</p>
-			</div>
-
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
 				{stats.map((stat) => (
 					<div
@@ -184,7 +177,7 @@ const AdminDashboard = () => {
 						<p className="text-gray-600">Total Available Cars</p>
 						<p className="text-xl font-bold text-gray-950">
 							{isLoading ? "..." : totalAvailableCars} / {cars.length}
-							<p className="text-sm">Available / Car</p>
+							<span className="block text-sm">Available / Car</span>
 						</p>
 					</div>
 				</div>
