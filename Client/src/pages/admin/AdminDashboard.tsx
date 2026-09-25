@@ -1,7 +1,6 @@
 import { useUsers } from "../../api";
 import { useCars, useCategories } from "../../api/catalog/query";
 import { useAdminRentalsQuery } from "../../api/rental/query"; // Using the query from AdminRentals
-import { useAuth } from "../../context/AuthContext";
 import type { CarModel, Rental } from "../../types";
 
 const numberOfDays = (start: string, end: string): number => {
@@ -48,7 +47,6 @@ const calculateLast30DaysRevenue = (rentals: Rental[]): number => {
 };
 
 const AdminDashboard = () => {
-	const { user } = useAuth();
 	const { data: rentals = [], isLoading: rentalsLoading } =
 		useAdminRentalsQuery();
 	const { data: cars = [], isLoading: carsLoading } = useCars();

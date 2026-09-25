@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Outlet, NavLink, useLocation } from "react-router";
 import type { NavLinkRenderProps } from "react-router";
 
@@ -9,7 +9,6 @@ import GridLineIcon from "remixicon-react/GridLineIcon";
 import UserLineIcon from "remixicon-react/UserLineIcon";
 import LogoutCircleLineIcon from "remixicon-react/LogoutCircleLineIcon";
 import HomeLineIcon from "remixicon-react/HomeLineIcon";
-import Settings2LineIcon from "remixicon-react/Settings2LineIcon";
 import type { RemixiconReactIconComponentType } from "remixicon-react";
 
 import { useAuth } from "../../context/AuthContext";
@@ -33,7 +32,6 @@ const PAGE_TITLES: Record<string, string> = {
 };
 
 export default function AdminLayout() {
-	const [collapsed, setCollapsed] = useState(false);
 	const { user } = useAuth();
 	const location = useLocation();
 
@@ -156,7 +154,7 @@ export default function AdminLayout() {
 										to={item.path}
 										end={item.end}
 										className={(state) => navLinkClass(state)}
-										title={collapsed ? item.label : undefined}
+										title={item.label}
 									>
 										<Icon size={24} />
 										<span className="text-left is-drawer-close:hidden">
@@ -181,7 +179,7 @@ export default function AdminLayout() {
 									<NavLink
 										to={item.path}
 										className={(state) => navLinkClass(state, item.danger)}
-										title={collapsed ? item.label : undefined}
+										title={item.label}
 									>
 										<Icon size={24} />
 										<span className="text-left is-drawer-close:hidden">
