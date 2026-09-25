@@ -3,6 +3,7 @@ import Services from "../../components/Homepage/Services";
 import Works from "../../components/Homepage/Works";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { NavLink } from "react-router";
 
 const Home = () => {
 	return (
@@ -38,9 +39,9 @@ const Footer = () => {
 				<a href="#howitworks" className="link link-hover">
 					How It Works
 				</a>
-				<a href="/login" className="link link-hover">
+				<NavLink to="/login" className="link link-hover">
 					Log In
-				</a>
+				</NavLink>
 			</nav>
 
 			<nav>
