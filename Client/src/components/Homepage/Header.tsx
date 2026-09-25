@@ -40,7 +40,7 @@ const Header = () => {
 						<li>
 							<a
 								href="#"
-								className="hover:text-gray-200 transition-colors cursor-pointer"
+								className="hover:text-white/70 transition-colors cursor-pointer"
 							>
 								Home
 							</a>
@@ -48,7 +48,7 @@ const Header = () => {
 						<li>
 							<a
 								href="#services"
-								className="hover:text-gray-200 transition-colors cursor-pointer"
+								className="hover:text-white/70 transition-colors cursor-pointer"
 							>
 								Services
 							</a>
@@ -56,7 +56,7 @@ const Header = () => {
 						<li>
 							<a
 								href="#howitworks"
-								className="hover:text-gray-200 transition-colors cursor-pointer"
+								className="hover:text-white/70 transition-colors cursor-pointer"
 							>
 								How it works
 							</a>
@@ -68,11 +68,11 @@ const Header = () => {
 							<button
 								className="
         px-7 py-2.5 rounded-xl
-        bg-white text-gray-950
+        bg-base-100 text-base-content
         font-inter text-lg font-bold
-        border border-white
+        border border-base-100
         transition-colors duration-300
-        hover:bg-gray-950 hover:border-gray-950 hover:text-white cursor-pointer
+        hover:bg-neutral hover:border-neutral hover:text-neutral-content cursor-pointer
       "
 							>
 								SignUp
@@ -82,11 +82,11 @@ const Header = () => {
 						<NavLink to="/login">
 							<button
 								className="px-7 py-2.5 rounded-xl
-        bg-white text-gray-950
+        bg-base-100 text-base-content
         font-inter text-lg font-bold
-        border border-white
+        border border-base-100
         transition-colors duration-300
-        hover:bg-gray-950 hover:border-gray-950 hover:text-white cursor-pointer
+        hover:bg-neutral hover:border-neutral hover:text-neutral-content cursor-pointer
      "
 							>
 								LogIn
@@ -98,20 +98,20 @@ const Header = () => {
 						<Menu>
 							<MenuButton
 								className=" px-7 py-2.5 rounded-xl
-        bg-white text-slate-800
+        bg-base-100 text-base-content
         font-inter text-lg font-bold
-        border border-white
+        border border-base-100
         transition-colors duration-300
-        hover:bg-slate-800 hover:border-slate-800 hover:text-white cursor-pointer"
+        hover:bg-neutral hover:border-neutral hover:text-neutral-content cursor-pointer"
 							>
 								Menu
 							</MenuButton>
 
-							<MenuItems className="absolute right-6 mt-3 w-44 sm:w-48 rounded-xl bg-white text-black shadow-xl flex flex-col font-inter text-sm outline-none">
+							<MenuItems className="absolute right-6 mt-3 w-44 sm:w-48 rounded-xl bg-base-100 text-base-content shadow-xl flex flex-col font-inter text-sm outline-none">
 								<MenuItem>
 									<a
 										href=""
-										className="px-4 py-3 data-focus:bg-gray-100 cursor-pointer"
+										className="px-4 py-3 data-focus:bg-base-200 cursor-pointer"
 									>
 										Home
 									</a>
@@ -120,7 +120,7 @@ const Header = () => {
 								<MenuItem>
 									<a
 										href="#services"
-										className="px-4 py-3 data-focus:bg-gray-100 cursor-pointer"
+										className="px-4 py-3 data-focus:bg-base-200 cursor-pointer"
 									>
 										Services
 									</a>
@@ -129,18 +129,18 @@ const Header = () => {
 								<MenuItem>
 									<a
 										href="#howitworks"
-										className="px-4 py-3 data-focus:bg-gray-100 cursor-pointer"
+										className="px-4 py-3 data-focus:bg-base-200 cursor-pointer"
 									>
 										How it works
 									</a>
 								</MenuItem>
 
-								<div className="border-t border-gray-200 mt-1" />
+								<div className="border-t border-base-300 mt-1" />
 
 								<MenuItem>
 									<Link
 										to="/register"
-										className="px-4 py-3 data-focus:bg-gray-100 cursor-pointer"
+										className="px-4 py-3 data-focus:bg-base-200 cursor-pointer"
 									>
 										SignUp
 									</Link>
@@ -149,7 +149,7 @@ const Header = () => {
 								<MenuItem>
 									<Link
 										to="/login"
-										className="px-4 rounded-xl py-3 cursor-pointer data-focus:bg-gray-100"
+										className="px-4 rounded-xl py-3 cursor-pointer data-focus:bg-base-200"
 									>
 										LogIn
 									</Link>

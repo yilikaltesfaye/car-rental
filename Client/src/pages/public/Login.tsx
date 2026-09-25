@@ -111,7 +111,7 @@ const Login = () => {
 					<button
 						disabled={isSubmitting}
 						type="submit"
-						className="mt-4 bg-gray-950 hover:bg-white border border-gray-950 hover:text-black text-white py-3 rounded-lg font-bold transition-colors cursor-pointer"
+						className="mt-4 bg-gray-950 hover:bg-white border border-gray-950 hover:text-black text-white py-3 rounded-lg font-bold transition-colors cursor-pointer "
 					>
 						Log In
 					</button>
