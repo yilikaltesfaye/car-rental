@@ -1,3 +1,4 @@
+import os  # <-- Added to cleanly parse strings
 from pathlib import Path
 from decouple import config
 import dj_database_url
@@ -7,7 +8,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
+# Dynamically adds Render's assigned live domain to prevent 400 Bad Request errors
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(",")
+RENDER_EXTERNAL_URL = config("RENDER_EXTERNAL_URL", default=None)
+if RENDER_EXTERNAL_URL:
+    domain = RENDER_EXTERNAL_URL.replace("https://", "").replace("http://", "")
+    ALLOWED_HOSTS.append(domain)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -27,6 +33,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # <-- Added for production static asset styling
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -55,7 +62,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "server.wsgi.application"
 
-DATABASES = {"default": dj_database_url.config(default=config("DATABASE_URL"))}
+# Optimization: Added conn_max_age to keep cloud database handshakes persistent
+DATABASES = {"default": dj_database_url.config(default=config("DATABASE_URL"), conn_max_age=600)}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -79,6 +87,13 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Compression backend configurations for WhiteNoise
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "account.User"
